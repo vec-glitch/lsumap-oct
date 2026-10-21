@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Salle University - Interactive Campus</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="modern-banner">
+        <!-- Navigation -->
+        <nav class="modern-navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <img src="index1logo.png" class="nav-logo" alt="LSU Logo">
+                    <span class="brand-text">La Salle University</span>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class='bx bx-menu'></i>
+                </button>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link active"><i class='bx bx-home'></i> Home</a></li>
+                    <li><a href="announcement.html" class="nav-link"><i class='bx bx-megaphone'></i> Announcements</a></li>
+                    <li><a href="contact.html" class="nav-link"><i class='bx bx-envelope'></i> Contact</a></li>
+                    <li><a href="aboutus.html" class="nav-link"><i class='bx bx-group'></i> About Us</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="welcome-badge">
+                    <i class='bx bx-map'></i>
+                    Interactive Campus Guide
+                </div>
+                <h1 class="hero-title">
+                    Discover Your Campus
+                    <span class="gradient-text">Experience</span>
+                </h1>
+                <p class="hero-description">
+                    Navigate through La Salle University with our interactive map. 
+                    Find buildings, explore facilities, and make the most of your campus journey.
+                </p>
+                
+                <div class="hero-buttons">
+                    <button class="cta-btn primary" onclick="window.location.href='index1.html'">
+                        <span class="btn-content">
+                            <i class='bx bx-navigation'></i>
+                            EXPLORE CAMPUS
+                        </span>
+                        <div class="btn-shine"></div>
+                    </button>
+                    
+                    <button class="cta-btn secondary" onclick="scrollToFeatures()">
+                        <span class="btn-content">
+                            <i class='bx bx-info-circle'></i>
+                            LEARN MORE
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cards  https://www.youtube.com/watch?v=9FNNkzPBFcE&pp=ygUWaHRtbCBob3cgdG8gbWFrZSBjYXJkcw%3D%3D-->
+            <div class="floating-gallery">
+                <div class="gallery-card">
+                    <img src="Buildings/SB building/Screenshot 2025-11-11 140832.png" alt="Campus View">
+                    <div class="card-overlay">
+                        <i class='bx bx-building'></i>
+                        <span>Academic Buildings</span>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="Screenshot 2025-11-11 162435.png" alt="Campus View">
+                    <div class="card-overlay">
+                        <i class='bx bx-leaf'></i>
+                        <span>Green Spaces</span>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="Buildings/IS Basketball Court/20251106_151614.jpg" alt="Campus View">
+                    <div class="card-overlay">
+                        <i class='bx bx-run'></i>
+                        <span>Sports Facilities</span>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="Screenshot 2025-11-11 145907.png" alt="Campus View">
+                    <div class="card-overlay">
+                        <i class='bx bx-book'></i>
+                        <span>Chapel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animated Background Elements https://www.youtube.com/watch?v=89vz08bOT_M&pp=ygUiZmxvYXRpbmcgYW5pbWF0aW9uIGJhY2tncm91bmQgaHRtbA%3D%3D-->
+        <div class="background-elements">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" onclick="scrollToFeatures()">
+            <div class="scroll-line"></div>
+            <span>Scroll to explore</span>
+        </div>
+    </div>
+
+    <!-- Why choose La salle -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Our Interactive Map?</h2>
+                <p>Experience campus navigation like never before</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class='bx bx-map-alt'></i>
+                    </div>
+                    <h3>Interactive Navigation</h3>
+                    <p>Find your way around campus with our intuitive, easy-to-use interactive map designed for students and visitors.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class='bx bx-buildings'></i>
+                    </div>
+                    <h3>Building Details</h3>
+                    <p>Get comprehensive information about each building, including facilities, departments, and available services.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class='bx bx-devices'></i>
+                    </div>
+                    <h3>Multi-Platform</h3>
+                    <p>Access the map on any device - desktop, tablet, or mobile - with full functionality across all platforms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="campus-highlights">
+        <div class="container">
+            <div class="section-header">
+                <h2>Campus Highlights</h2>
+                <p>Discover what makes La Salle University special</p>
+            </div>
+
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-image">
+                        <img src="Photos/scground.png" alt="Academic Excellence">
+                    </div>
+                    <div class="highlight-content">
+                        <h3>SB Building</h3>
+                        <p>A central hub for both academic studies and administrative services, bringing classrooms and key offices under one roof.</p>
+                        <!--<a href="#" class="highlight-link">lorem ipsum <i class='bx bx-chevron-right'></i></a> -->
+                    </div>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-image">
+                        <img src="Photos/Screenshot 2025-11-13 151947.png" alt="Student Life">
+                    </div>
+                    <div class="highlight-content">
+                        <h3>Green Space</h3>
+                        <p>The heart of student life, this landscaped park offers a serene environment for studying outdoors and socializing between classes.</p>
+                        <!--<a href="#" class="highlight-link">lorem ipsum <i class='bx bx-chevron-right'></i></a> -->
+                    </div>
+                </div>
+
+                <div class="highlight-card">
+                    <div class="highlight-image">
+                        <img src="Buildings/Star Chapel/Screenshot 2025-11-11 145907.png" alt="Campus Facilities">
+                    </div>
+                    <div class="highlight-content">
+                        <h3>Our Lady of the Star Chapel</h3>
+                        <p> peaceful sanctuary for spiritual reflection, meditation, and community worship.</p>
+                        <!--<a href="#" class="highlight-link">lorem ipsum <i class='bx bx-chevron-right'></i></a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Explore Campus?</h2>
+                <p>Start your journey with our interactive campus map and discover everything La Salle University has to offer.</p>
+                <button class="cta-btn primary large" onclick="window.location.href='index1.html'">
+                    <span class="btn-content">
+                        <i class='bx bx-navigation'></i>
+                        LAUNCH EXPLORE CAMPUS
+                    </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="index1logo.png" alt="LSU Logo" class="footer-logo">
+                    <div class="footer-info">
+                        <h3>La Salle University</h3>
+                        <p>Interactive Campus Map</p>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <a href="index.html">Home</a>
+                        <a href="announcement.html">Announcements</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="aboutus.html">About Us</a>
+                    </div>
+               
+                    <div class="footer-column">
+                        <h4>More Info</h4>
+                        <a>Number</a>
+                        <a>Gmail</a>
+                        <a>Location</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="bx bx-x"></i>' : '<i class="bx bx-menu"></i>';
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="bx bx-menu"></i>';
+            });
+        });
+
+        // Scroll to features function
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.modern-navbar');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+
+            // Hide scroll indicator when scrolled
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrolled > 50) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.visibility = 'hidden';
+            } else {
+                scrollIndicator.style.opacity = '1';
+                scrollIndicator.style.visibility = 'visible';
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.feature-card, .highlight-card');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

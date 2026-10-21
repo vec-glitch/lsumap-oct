@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Salle University – Interactive Campus Guide</title> 
+  <link rel="stylesheet" href="style1.css"> 
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    .view-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.95);
+      padding: 6px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .view-toggle button {
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #1b4332;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .view-toggle button.active {
+      background: #1b4332;
+      color: #fff;
+    }
+    #view3d.hidden-view {
+      display: none;
+    }
+    #view2d {
+      display: none;
+      height: 100vh;
+      width: 100%;
+    }
+    #view2d.active {
+      display: block;
+    }
+    #nav2d-controls {
+      position: fixed;
+      top: 70px;
+      right: 16px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 240px;
+    }
+    .nav2d-title {
+      font-weight: 700;
+      color: #1b4332;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .nav2d-field {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .nav2d-field label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    #nav2d-controls select, #nav2d-controls button {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    #nav2d-controls button {
+      background: #1b4332;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 600;
+      transition: background 0.15s ease;
+    }
+    #nav2d-controls button:hover {
+      background: #2d6a4f;
+    }
+    #swapBtn {
+      align-self: center;
+      background: #eef4f0 !important;
+      color: #1b4332 !important;
+      width: 32px;
+      height: 32px;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      font-size: 16px;
+      margin: -2px 0;
+    }
+    #swapBtn:hover {
+      background: #dcebe2 !important;
+    }
+    #myLocationBtn {
+      background: #2d6a4f !important;
+    }
+    #clearRouteBtn {
+      background: #b3261e !important;
+    }
+    #routeSummary {
+      margin-top: 4px;
+      background: #eef4f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: #1b4332;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    #routeSummary strong {
+      font-size: 14px;
+    }
+    .nav-route-animated {
+      stroke-dasharray: 10 8;
+      animation: navDashFlow 1s linear infinite;
+    }
+    @keyframes navDashFlow {
+      to { stroke-dashoffset: -18; }
+    }
+
+    /* FIX: make the sidebar float on top of the map instead of pushing it
+       aside. The map/3D view is always full-width underneath; the sidebar
+       just overlays it when open and disappears completely when closed -
+       this avoids relying on the map resizing itself, which was leaving a
+       blank gap where the sidebar used to be. */
+    #view3d, #view2d, #map {
+      margin-left: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+    }
+    /* Keep the toggle buttons and nav controls as small floating pills in
+       the corner, not stretched full-width by the rule above. */
+    .view-toggle {
+      left: auto !important;
+      width: auto !important;
+    }
+    #nav2d-controls {
+      left: auto !important;
+    }
+    .sidebar {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 2000;
+      transition: transform 0.3s ease;
+    }
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    /* Building hotspot markers */
+    .building-hotspot {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translate(-50%, -100%);
+    }
+    .hotspot-pin {
+      width: 18px;
+      height: 18px;
+      border-radius: 50% 50% 50% 0;
+      background: #d62828;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      transform: rotate(-45deg);
+      transition: transform 0.15s ease;
+    }
+    .building-hotspot:hover .hotspot-pin {
+      transform: rotate(-45deg) scale(1.2);
+    }
+    .hotspot-label {
+      margin-top: 4px;
+      background: rgba(27,67,50,0.95);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    /* Override whatever full-height/full-width sizing style1.css gives
+       #infoCard by default - force it into a small floating popup card
+       instead of a tall panel. */
+    #infoCard {
+      position: fixed !important;
+      top: 80px !important;
+      right: 16px !important;
+      left: auto !important;
+      bottom: auto !important;
+      width: 280px !important;
+      height: auto !important;
+      max-height: 400px !important;
+      overflow-y: auto !important;
+      border-radius: 12px !important;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3) !important;
+      background: #fff !important;
+      z-index: 3000 !important;
+    }
+    #cardImg {
+      width: 100% !important;
+      height: 140px !important;
+      object-fit: cover !important;
+      display: block;
+    }
+    #cardClose {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1;
+      z-index: 10;
+    }
+    #cardClose:hover {
+      background: rgba(0,0,0,0.85);
+    }
+    #cardLink {
+      display: inline-block;
+      margin-top: 8px;
+      background: #1b4332;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+<aside class="sidebar">
+  <button class="toggle-btn" id="toggleSidebar">
+    <i class='bx bx-chevron-left'></i>
+  </button>
+  
+  <div class="banner">
+    <div class="search-container">
+      <div class="search-box">
+        <i class='bx bx-search search-icon'></i>
+        <input id="search" placeholder="Search buildings, locations..." autocomplete="off" />
+        <button class="search-btn">
+          <i class='bx bx-arrow-right'></i>
+        </button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-content">
+    <!-- Building Categories Section -->
+    <div class="menu-section">
+      <div class="menu-header">
+        <i class='bx bx-buildings'></i>
+        <span class="menu-title">Building Categories</span>
+        <button class="expand-btn" id="catToggle">
+          <i class='bx bx-chevron-down'></i>
+        </button>
+      </div>
+      <div class="subcats" id="subcats">
+        <button class="subcat-btn" data-cat="all" onclick="window.location.href='Allbuilding.html'">
+          <i class='bx bx-map'></i>
+          <span>All Buildings</span>
+        </button>
+        <button class="subcat-btn" data-cat="administrative" onclick="window.location.href='Administrative.html'">
+          <i class='bx bx-briefcase'></i>
+          <span>Administrative Offices</span>
+        </button>
+        <button class="subcat-btn" data-cat="academic" onclick="window.location.href='Academic.html'">
+          <i class='bx bx-book'></i>
+          <span>Academic Rooms</span>
+        </button>
+        <button class="subcat-btn" data-cat="labs" onclick="window.location.href='Laboratories.html'">
+          <i class='bx bx-test-tube'></i>
+          <span>Laboratories</span>
+        </button>
+        <button class="subcat-btn" data-cat="sports" onclick="window.location.href='Sports.html'">
+          <i class='bx bx-trophy'></i>
+          <span>Sports Facilities</span>
+        </button>
+        <button class="subcat-btn" data-cat="services" onclick="window.location.href='Services.html'">
+          <i class='bx bx-wrench'></i>
+          <span>Services</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Photos & Galleries -->
+    <div class="menu-section">
+      <button class="main-btn gallery-btn" onclick="window.location.href='photosgallery.html'">
+        <i class='bx bx-photo-album'></i>
+        <span>Photos & Galleries</span>
+        <i class='bx bx-chevron-right'></i>
+      </button>
+    </div>
+
+    <!-- Join Us Section -->
+    <div class="menu-section">
+      <div class="menu-header">
+        <i class='bx bx-group'></i>
+        <span class="menu-title">Join Us</span>
+      </div>
+      <div class="menu-content">
+        <button class="main-btn gallery-btn" onclick="window.location.href='admissioninformation.html'">
+          <i class='bx bx-user-plus'></i>
+          <span>Admission Information</span>
+        </button>
+        <button class="main-btn gallery-btn" onclick="window.location.href='registrarinformation.html'">
+          <i class='bx bx-calendar-event'></i>
+          <span>Registrar Information</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="menu-section">
+      <div class="menu-header">
+        <i class='bx bx-cog'></i>
+        <span class="menu-title">Settings</span>
+      </div>
+      <div class="menu-content">
+          <button class="main-btn gallery-btn" onclick="window.location.href='settings.html'">
+          <i class='bx bx-slider-alt'></i>
+          <span>Preferences</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="menu-section">
+      <button class="main-btn back-btn" onclick="window.location.href='index.html'">
+        <i class='bx bx-arrow-back'></i>
+        <span>Go Back to Main</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<button class="reopen-btn" id="openSidebar" aria-label="Open sidebar">
+  <i class='bx bx-menu'></i>
+</button>
+
+<!-- View toggle: 3D visual map (SketchUp model) vs 2D point-to-point navigation -->
+<div class="view-toggle">
+  <button id="btn3d" class="active" onclick="showMapView('3d')">
+    <i class='bx bx-cube-alt'></i> 3D View
+  </button>
+  <button id="btn2d" onclick="showMapView('2d')">
+    <i class='bx bx-map-alt'></i> 2D Navigation
+  </button>
+</div>
+
+<!-- 3D View: SketchUp campus model -->
+<div id="view3d">
+<!-- Map Section -->
+<div id="map" style="height: 100vh; width: 100%; margin: 0; padding: 0; overflow: hidden;">
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <model-viewer
+    id="campusModel"
+    src="LSU_CAMPUS_1_and_2_3D_model.glb"
+    alt="La Salle University Campus 3D Map"
+    camera-controls
+    touch-action="pan-y"
+    shadow-intensity="1"
+    exposure="1"
+
+    camera-orbit="-42.4547deg 64.4970deg 1147.4278"
+    camera-target="-93.7274m 11.8883m -203.1199m"
+
+    field-of-view="25deg"
+
+    min-camera-orbit="auto 35deg 5%"
+    max-camera-orbit="auto 80deg 7%"
+
+    interaction-prompt="none"
+
+    auto-rotate
+    auto-rotate-delay="3000"
+    rotation-per-second="10deg"
+
+    style="width:100%; height:100vh; display:block; border:none; background:#dfe3e6;">
+
+    <div class="mv-progress-bar" slot="progress-bar">
+      <div class="mv-update-bar"></div>
+    </div>
+
+  </model-viewer>
+</div>
+</div>
+
+<!-- 2D Navigation View (point-to-point routing) -->
+<div id="view2d">
+  <div id="nav2d-controls">
+    <div class="nav2d-title"><i class='bx bx-map-alt'></i> Campus Navigator</div>
+
+    <div class="nav2d-field">
+      <label><i class='bx bx-radio-circle-marker' style="color:#2d9d5f;"></i> From</label>
+      <select id="nav2dFrom"></select>
+    </div>
+
+    <button id="swapBtn" onclick="swap2DRoute()" title="Swap start and end">
+      <i class='bx bx-transfer-alt'></i>
+    </button>
+
+    <div class="nav2d-field">
+      <label><i class='bx bx-map-pin' style="color:#d62828;"></i> To</label>
+      <select id="nav2dTo"></select>
+    </div>
+
+    <button id="findRouteBtn" onclick="find2DRoute()"><i class='bx bx-directions'></i> Find Route</button>
+    <button id="myLocationBtn" onclick="use2DMyLocation()"><i class='bx bx-current-location'></i> Use My Location</button>
+    <button id="clearRouteBtn" onclick="clear2DRoute()"><i class='bx bx-x'></i> Clear</button>
+
+    <div id="routeSummary" style="display:none;"></div>
+  </div>
+  <div id="leafletMap" style="height: 100%; width: 100%;"></div>
+</div>
+
+<style>
+  .mv-progress-bar {
+    display: block;
+    width: 33%;
+    height: 4px;
+    max-width: 300px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.15);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: rgba(0,0,0,0.1);
+  }
+  .mv-update-bar {
+    background-color: #4285f4;
+    width: 0%;
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+</style>
+
+<script>
+  const mapModelViewer = document.querySelector('#map model-viewer');
+  if (mapModelViewer) {
+    mapModelViewer.addEventListener('progress', (event) => {
+      const progressBar = mapModelViewer.querySelector('.mv-update-bar');
+      const container = mapModelViewer.querySelector('.mv-progress-bar');
+      if (progressBar) progressBar.style.width = `${event.detail.totalProgress * 100}%`;
+      if (container) container.style.display = event.detail.totalProgress === 1 ? 'none' : 'block';
+    });
+  }
+</script>
+
+
+
+<!-- Card for building info -->
+<div class="card" id="infoCard">
+  <button id="cardClose" onclick="document.getElementById('infoCard').style.display='none'">✕</button>
+  <img src="" alt="Building" id="cardImg" />
+  <div class="pad">
+    <h3 id="cardTitle"></h3>
+    <p id="cardDesc"></p>
+    <a id="cardLink" href="#" style="display:none;">View Details</a>
+  </div>
+</div>
+
+<!-- Updated Chatbot -->
+<div class="chat-btn" id="chatBtn">💬</div>
+<div class="chat-box" id="chatBox">
+  <div class="chat-head">La Salle AI Assistant</div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Ask about admissions, tuition, campus..." />
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// JavaScript functionality
+document.getElementById('catToggle').onclick = () => {
+  const subcats = document.getElementById('subcats');
+  const icon = document.getElementById('catToggle').querySelector('i');
+  
+  subcats.style.display = subcats.style.display === 'flex' ? 'none' : 'flex';
+  icon.className = subcats.style.display === 'flex' ? 'bx bx-chevron-up' : 'bx bx-chevron-down';
+};
+
+function showCard(title, img, desc, page) {
+  document.getElementById('infoCard').style.display = 'block';
+  document.getElementById('cardTitle').innerText = title;
+  document.getElementById('cardImg').src = img;
+  document.getElementById('cardDesc').innerText = desc;
+  const link = document.getElementById('cardLink');
+  if (page) {
+    link.href = page;
+    link.style.display = 'inline-block';
+  } else {
+    link.style.display = 'none';
+  }
+}
+
+// ===========================================================
+// Building hotspot markers on the 3D model.
+// Reuses the same `buildings` array the search bar already uses,
+// so names/images/pages stay in sync with search automatically.
+//
+// buildingPositions below holds the 3D coordinates for each building.
+// These are PLACEHOLDERS - use enableHotspotPicker() (see below) to
+// find each building's real position by clicking on it in the 3D view,
+// then update the matching entry here.
+// ===========================================================
+const buildingPositions = {
+"BVM Building": { position: "-109.05 18.61 -306.19", normal: "-0.00 0.97 0.24" },
+"SJ Building": { position: "-30.61 15.17 -273.21", normal: "0 1 0" },
+"LS Building": { position: "-196.07 11.59 -118.17", normal: "0.00 0.94 -0.34" },
+"Art Center": { position: "-201.25 13.64 -179.63", normal: "-0.00 0.97 0.24" },
+"ROTC Building": { position: "13.84 8.73 -90.33", normal: "0 1 0" },
+"IS Basketball Court": { position: "-78.10 11.42 -367.26", normal: "0 1 0" },
+"SB Building": { position: "-112.10 14.42 -10.13", normal: "0 1 0" },
+"Star Chapel": { position: "-114.45 10.45 -86.44", normal: "0 1 0" },
+"SC Building": { position: "-115.97 14.66 -151.51", normal: "0 1 0" },
+"Lasallian Mission Unit (LMU)": { position: "-173.33 10.69 -60.32", normal: "0 1 0" },
+"Deportivo": { position: "-33.25 11.62 2.63", normal: "0 1 0" },
+"Recycling": { position: "13.84 8.73 -80.33", normal: "0 1 0" },
+"Oval": { position: "-9.08 4.57 -44.73", normal: "0 1 0" },
+"University Clinic": { position: "-141.31 7.08 -38.26", normal: "0 1 0" },
+"USG Office": { position: "-148.28 7.61 -70.80", normal: "0 1 0" }
+
+};
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function renderBuildingHotspots() {
+  const mv = document.querySelector('#map model-viewer');
+  if (!mv) return;
+
+  buildings.forEach((building) => {
+    const pos = buildingPositions[building.name];
+    if (!pos) return; // no coordinates yet for this building
+
+    const slot = 'hotspot-' + slugify(building.name);
+
+    const btn = document.createElement('button');
+    btn.className = 'building-hotspot';
+    btn.slot = slot;
+    btn.dataset.position = pos.position;
+    btn.dataset.normal = pos.normal;
+    btn.setAttribute('slot', slot);
+    btn.setAttribute('data-position', pos.position);
+    btn.setAttribute('data-normal', pos.normal);
+    btn.onclick = () => showCard(building.name, building.image, 'Tap "View Details" to learn more about this building.', building.page);
+
+    const pin = document.createElement('span');
+    pin.className = 'hotspot-pin';
+    const label = document.createElement('span');
+    label.className = 'hotspot-label';
+    label.textContent = building.name;
+
+    btn.appendChild(pin);
+    btn.appendChild(label);
+    mv.appendChild(btn);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', renderBuildingHotspots);
+if (document.readyState !== 'loading') renderBuildingHotspots();
+
+// --- DEV HELPER: find real hotspot coordinates by clicking the model ---
+// Open the browser console, run: enableHotspotPicker()
+// Then click a building in the 3D view. It logs the exact position/normal
+// to paste into the matching entry in buildingPositions above.
+function enableHotspotPicker() {
+  const mv = document.querySelector('#map model-viewer');
+  mv.addEventListener('click', (event) => {
+    const rect = mv.getBoundingClientRect();
+    const hit = mv.positionAndNormalFromPoint(
+      event.clientX - rect.left,
+      event.clientY - rect.top
+    );
+    if (hit) {
+      console.log(
+        `position: "${hit.position.x.toFixed(2)} ${hit.position.y.toFixed(2)} ${hit.position.z.toFixed(2)}", ` +
+        `normal: "${hit.normal.x.toFixed(2)} ${hit.normal.y.toFixed(2)} ${hit.normal.z.toFixed(2)}"`
+      );
+    } else {
+      console.log('No surface hit at that point - click directly on the model.');
+    }
+  });
+  console.log('Hotspot picker enabled. Click any building to log its coordinates.');
+}
+
+// Search functionality
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('search-results');
+const searchBtn = document.querySelector('.search-btn');
+
+const buildings = [
+  {
+    name: "BVM Building",
+    keywords: ["BVM", "office", "administration"],
+    page: "Buildings/BVM/bvmbuilding.html",
+    image: "552579832_1306263221234314_7186467780682867067_n.jpg"
+  },
+  {
+    name: "SJ Building",
+    keywords: ["admin", "office", "administration"],
+    page: "Buildings/SJ Building/sjbuilding.html",
+    image: "admin.jpg"
+  },
+  {
+    name: "LS Building",
+    keywords: ["building", "office", "administration"],
+    page: "Buildings/LS Building/lsbuilding.html",
+    image: "admin.jpg"
+  },
+  {
+    name: "Art Center",
+    keywords: ["lab", "Art", "Gym"],
+    page: "Buildings/Art Center/artcenterbuilding.html",
+    image: "lab.jpg"
+  },
+  {
+    name: "ROTC Building",
+    keywords: ["ROTC", "computer", "building"],
+    page: "Buildings/ROTC/rotcbuilding.html",
+    image: "computerlab.jpg"
+  },
+  {
+    name: "IS Basketball Court",
+    keywords: ["sports", "gym", "basketball"],
+    page: "Buildings/IS Basketball Court/isbasketballcourt.html",
+    image: "gym.jpg"
+  },
+  {
+    name: "SB Building",
+    keywords: ["SB", "ground", "basketball"],
+    page: "Buildings/SB building/sbbuilding.html",
+    image: "gym.jpg"
+  },
+  {
+    name: "Star Chapel",
+    keywords: ["chapel", "building", "religious"],
+    page: "Buildings/Star Chapel/starchapel.html",
+    image: "starchapel.jpg"
+  },
+  {
+    name: "SC Building",
+    keywords: ["SC", "building", "religious"],
+    page: "Buildings/SC/scbuilding.html",
+    image: "starchapel.jpg"
+  },
+    {
+    name: "Lasallian Mission Unit (LMU)",
+    keywords: ["LMU", "building", "administrative"],
+    page: "Buildings/LMU/LMU.html",
+    image: "starchapel.jpg"
+  },
+    {
+    name: "Deportivo",
+    keywords: ["Deportivo", "building", "Basketball"],
+    page: "Buildings/SC/scbuilding.html",
+    image: "starchapel.jpg"
+  },
+    {
+    name: "La Librarie",
+    keywords: ["La Librarie", "building", "religious"],
+    page: "Buildings/La Librarie/lalibrarie.html",
+    image: "starchapel.jpg"
+  },
+    {
+    name: "Recycling",
+    keywords: ["Recycling", "building", "religious"],
+    page: "Buildings/Recycling/recycling.html",
+    image: "starchapel.jpg"
+  },
+    {
+    name: "Oval",
+    keywords: ["Oval", "building", "religious"],
+    page: "Buildings/Oval/oval.html",
+    image: "starchapel.jpg"
+  },
+  {
+    name: "University Clinic",
+    keywords: ["University Clinic", "building", "Clinic"],
+    page: "Buildings/University Clinic/universityclinic.html",
+    image: "starchapel.jpg"
+  },
+  {
+    name: "USG Office",
+    keywords: ["office", "student", "government"],
+    page: "Buildings/USG Office/usgoffice.html",
+    image: "usgoffice.jpg"
+  }
+
+];
+
+function filterBuildings(query) {
+  if (!query) return [];
+  
+  const lowerCaseQuery = query.toLowerCase();
+  return buildings.filter(building => {
+    return building.name.toLowerCase().includes(lowerCaseQuery) ||
+           building.keywords.some(keyword => keyword.toLowerCase().includes(lowerCaseQuery));
+  });
+}
+
+function displayResults(results) {
+  searchResults.innerHTML = '';
+  
+  if (results.length === 0 && searchInput.value.trim() !== '') {
+    const noResults = document.createElement('div');
+    noResults.className = 'no-results';
+    noResults.innerHTML = '<i class="bx bx-search"></i><span>No buildings found</span>';
+    searchResults.appendChild(noResults);
+    searchResults.style.display = 'block';
+    return;
+  }
+  
+  if (results.length === 0) {
+    searchResults.style.display = 'none';
+    return;
+  }
+  
+  results.forEach(building => {
+    const resultItem = document.createElement('div');
+    resultItem.className = 'result-item';
+    
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'result-image';
+    
+    const img = document.createElement('img');
+    img.src = building.image;
+    img.alt = building.name;
+    img.onerror = function() {
+      this.style.display = 'none';
+      const fallbackText = document.createElement('div');
+      fallbackText.innerHTML = '<i class="bx bx-building"></i>';
+      imageDiv.appendChild(fallbackText);
+    };
+    
+    imageDiv.appendChild(img);
+    
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'result-name';
+    nameDiv.textContent = building.name;
+    
+    resultItem.appendChild(imageDiv);
+    resultItem.appendChild(nameDiv);
+    
+    resultItem.addEventListener('click', () => {
+      window.location.href = building.page;
+      searchInput.value = '';
+      searchResults.style.display = 'none';
+    });
+    
+    searchResults.appendChild(resultItem);
+  });
+  
+  searchResults.style.display = 'block';
+}
+
+searchInput.addEventListener('input', function() {
+  const query = this.value.trim();
+  const results = filterBuildings(query);
+  displayResults(results);
+});
+
+searchBtn.addEventListener('click', function() {
+  const query = searchInput.value.trim();
+  if (query) {
+    const results = filterBuildings(query);
+    if (results.length > 0) {
+      window.location.href = results[0].page;
+    }
+  }
+});
+
+// Hide results when clicking outside
+document.addEventListener('click', function(e) {
+  if (!document.querySelector('.search-container').contains(e.target)) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// Sidebar toggle functionality
+const sidebar = document.querySelector(".sidebar");
+const toggleBtn = document.getElementById("toggleSidebar");
+const openBtn = document.getElementById("openSidebar");
+
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.add("hidden");
+  openBtn.style.display = "grid";
+});
+
+openBtn.addEventListener("click", () => {
+  sidebar.classList.remove("hidden");
+  openBtn.style.display = "none";
+});
+
+// ===========================================================
+// 3D View / 2D Navigation toggle
+// ===========================================================
+let leafletMapInitialized = false;
+
+function showMapView(view) {
+  const view3d = document.getElementById('view3d');
+  const view2d = document.getElementById('view2d');
+  const btn3d = document.getElementById('btn3d');
+  const btn2d = document.getElementById('btn2d');
+
+  if (view === '3d') {
+    view3d.classList.remove('hidden-view');
+    view2d.classList.remove('active');
+    btn3d.classList.add('active');
+    btn2d.classList.remove('active');
+  } else {
+    view3d.classList.add('hidden-view');
+    view2d.classList.add('active');
+    btn3d.classList.remove('active');
+    btn2d.classList.add('active');
+
+    if (!leafletMapInitialized) {
+      initLeafletNav();
+      leafletMapInitialized = true;
+    } else {
+      setTimeout(() => leafletMap.invalidateSize(), 100);
+    }
+  }
+}
+
+// ===========================================================
+// 2D Navigation - sample waypoint graph using real building
+// names from this site. Swap for real traced campus paths and
+// real GPS coordinates once the path network is ready.
+// ===========================================================
+const navNodes = {
+  // Buildings
+  building_bvm:   { lat: 8.149782180961862, lng: 123.84487220897792, type: "building", name: "BVM Building", connects_to: ["wp_n1"] },
+  building_sj:    { lat: 8.150218820544419, lng: 123.84540964779858, type: "building", name: "SJ Building", connects_to: ["wp_n2"] },
+  building_art:   { lat: 8.14847862793171, lng: 123.84525418353037, type: "building", name: "Art Center", connects_to: ["wp_c1"] },
+  building_sc:    { lat: 8.149008342353008, lng: 123.84584850032773, type: "building", name: "SC Building", connects_to: ["wp_c1"] },
+  building_ls:    { lat: 8.148266052535323, lng: 123.84574867367567, type: "building", name: "LS Building", connects_to: ["wp_c2"] },
+  building_chapel:{ lat: 8.148716482436523, lng: 123.84636388442284, type: "building", name: "Star Chapel", connects_to: ["wp_c3"] },
+  building_sb:    { lat: 8.148367169497226, lng: 123.8467597086986, type: "building", name: "SB Building", connects_to: ["wp_c4"] },
+
+  // Waypoints (the walkable path network connecting building clusters)
+  wp_n1:   { lat: 8.1495, lng: 123.8450, type: "waypoint", connects_to: ["building_bvm", "building_isbc", "wp_n2", "wp_rotc"] },
+  wp_n2:   { lat: 8.1493, lng: 123.8452, type: "waypoint", connects_to: ["building_sj", "wp_n1", "wp_c1"] },
+  wp_rotc: { lat: 8.1494, lng: 123.8462, type: "waypoint", connects_to: ["wp_n1", "building_rotc"] },
+  wp_c1:   { lat: 8.1488, lng: 123.8455, type: "waypoint", connects_to: ["building_art", "building_sc", "wp_n2", "wp_c2"] },
+  wp_c2:   { lat: 8.1483, lng: 123.8458, type: "waypoint", connects_to: ["building_ls", "building_lib", "building_lmu", "building_usg", "wp_c1", "wp_c3"] },
+  wp_c3:   { lat: 8.1487, lng: 123.8463, type: "waypoint", connects_to: ["building_chapel", "building_clinic", "wp_c2", "wp_c4", "wp_e1"] },
+  wp_c4:   { lat: 8.1484, lng: 123.8467, type: "waypoint", connects_to: ["building_sb", "wp_c3"] },
+  wp_e1:   { lat: 8.1481, lng: 123.8461, type: "waypoint", connects_to: ["building_recyc", "wp_c3", "wp_e2"] },
+  wp_e2:   { lat: 8.1479, lng: 123.8465, type: "waypoint", connects_to: ["building_oval", "building_dep", "wp_e1"] }
+};
+
+
+function navDistance(a, b) {
+  const dx = a.lat - b.lat, dy = a.lng - b.lng;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function findNavPath(startId, endId) {
+  const openSet = new Set([startId]);
+  const cameFrom = {};
+  const gScore = {}, fScore = {};
+  Object.keys(navNodes).forEach(id => { gScore[id] = Infinity; fScore[id] = Infinity; });
+  gScore[startId] = 0;
+  fScore[startId] = navDistance(navNodes[startId], navNodes[endId]);
+
+  while (openSet.size > 0) {
+    let current = null, lowest = Infinity;
+    openSet.forEach(id => { if (fScore[id] < lowest) { lowest = fScore[id]; current = id; } });
+
+    if (current === endId) {
+      const path = [current];
+      while (cameFrom[current]) { current = cameFrom[current]; path.unshift(current); }
+      return path;
+    }
+    openSet.delete(current);
+
+    navNodes[current].connects_to.forEach(neighborId => {
+      const tentativeG = gScore[current] + navDistance(navNodes[current], navNodes[neighborId]);
+      if (tentativeG < gScore[neighborId]) {
+        cameFrom[neighborId] = current;
+        gScore[neighborId] = tentativeG;
+        fScore[neighborId] = tentativeG + navDistance(navNodes[neighborId], navNodes[endId]);
+        openSet.add(neighborId);
+      }
+    });
+  }
+  return null;
+}
+
+let leafletMap, navRouteLine, myLocationMarker, walkerMarker, walkerAnim;
+
+function buildingIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:16px;height:16px;background:${color};border:2px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 16]
+  });
+}
+
+function initLeafletNav() {
+  leafletMap = L.map('leafletMap').setView([8.1485, 123.8455], 17);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 20,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(leafletMap);
+
+  Object.entries(navNodes).forEach(([id, node]) => {
+    const isBuilding = node.type === "building";
+    if (isBuilding) {
+      L.marker([node.lat, node.lng], { icon: buildingIcon('#2d6a4f') })
+        .addTo(leafletMap)
+        .bindTooltip(node.name);
+    } else {
+      L.circleMarker([node.lat, node.lng], {
+        radius: 3, color: "#aaa", fillColor: "#ccc", fillOpacity: 0.8, weight: 1
+      }).addTo(leafletMap);
+    }
+  });
+
+  Object.entries(navNodes).forEach(([id, node]) => {
+    node.connects_to.forEach(neighborId => {
+      L.polyline([[node.lat, node.lng], [navNodes[neighborId].lat, navNodes[neighborId].lng]],
+        { color: "#aaa", weight: 2, dashArray: "4 5" }).addTo(leafletMap);
+    });
+  });
+
+  const buildingIds = Object.keys(navNodes)
+    .filter(id => navNodes[id].type === "building")
+    .sort((a, b) => navNodes[a].name.localeCompare(navNodes[b].name));
+
+  const fromSelect = document.getElementById('nav2dFrom');
+  const toSelect = document.getElementById('nav2dTo');
+  buildingIds.forEach(id => {
+    fromSelect.innerHTML += `<option value="${id}">${navNodes[id].name}</option>`;
+    toSelect.innerHTML += `<option value="${id}">${navNodes[id].name}</option>`;
+  });
+  toSelect.selectedIndex = 1;
+}
+
+function swap2DRoute() {
+  const fromSelect = document.getElementById('nav2dFrom');
+  const toSelect = document.getElementById('nav2dTo');
+  const temp = fromSelect.value;
+  fromSelect.value = toSelect.value;
+  toSelect.value = temp;
+  if (navRouteLine) find2DRoute();
+}
+
+// Rough meters-per-degree conversion - fine for a small campus area.
+// Once real GPS coordinates replace these placeholders, this stays accurate.
+function metersBetween(a, b) {
+  const R = 111320; // meters per degree latitude
+  const dLat = (a.lat - b.lat) * R;
+  const dLng = (a.lng - b.lng) * R * Math.cos(a.lat * Math.PI / 180);
+  return Math.sqrt(dLat * dLat + dLng * dLng);
+}
+
+function find2DRoute() {
+  const startId = document.getElementById('nav2dFrom').value;
+  const endId = document.getElementById('nav2dTo').value;
+  if (startId === endId) return;
+  const path = findNavPath(startId, endId);
+  clear2DRoute();
+  if (!path) return;
+
+  const latlngs = path.map(id => [navNodes[id].lat, navNodes[id].lng]);
+  navRouteLine = L.polyline(latlngs, {
+    color: "#1b4332", weight: 5, opacity: 0.9,
+    className: 'nav-route-animated'
+  }).addTo(leafletMap);
+  leafletMap.fitBounds(navRouteLine.getBounds(), { padding: [50, 50] });
+
+  // total distance + rough walk time
+  let totalMeters = 0;
+  for (let i = 0; i < path.length - 1; i++) {
+    totalMeters += metersBetween(navNodes[path[i]], navNodes[path[i + 1]]);
+  }
+  const walkMinutes = Math.max(1, Math.round(totalMeters / 80)); // ~80 m/min walking pace
+  const distText = totalMeters >= 1000 ? (totalMeters / 1000).toFixed(2) + ' km' : Math.round(totalMeters) + ' m';
+
+  const summary = document.getElementById('routeSummary');
+  summary.style.display = 'block';
+  summary.innerHTML =
+    `<strong>${navNodes[startId].name} &rarr; ${navNodes[endId].name}</strong><br>` +
+    `<i class='bx bx-walk'></i> ${distText} &middot; ~${walkMinutes} min walk`;
+
+  animateWalker(latlngs);
+}
+
+function animateWalker(latlngs) {
+  if (walkerAnim) cancelAnimationFrame(walkerAnim);
+  if (walkerMarker) leafletMap.removeLayer(walkerMarker);
+
+  walkerMarker = L.circleMarker(latlngs[0], {
+    radius: 7, color: '#fff', weight: 2, fillColor: '#e07a5f', fillOpacity: 1
+  }).addTo(leafletMap);
+
+  const durationMs = 1800;
+  const start = performance.now();
+
+  function step(now) {
+    const t = Math.min(1, (now - start) / durationMs);
+    const segF = t * (latlngs.length - 1);
+    const i = Math.min(latlngs.length - 2, Math.floor(segF));
+    const localT = segF - i;
+    const lat = latlngs[i][0] + (latlngs[i + 1][0] - latlngs[i][0]) * localT;
+    const lng = latlngs[i][1] + (latlngs[i + 1][1] - latlngs[i][1]) * localT;
+    walkerMarker.setLatLng([lat, lng]);
+    if (t < 1) walkerAnim = requestAnimationFrame(step);
+  }
+  walkerAnim = requestAnimationFrame(step);
+}
+
+function use2DMyLocation() {
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported on this browser.');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
+      if (myLocationMarker) leafletMap.removeLayer(myLocationMarker);
+      myLocationMarker = L.circleMarker([latitude, longitude], {
+        radius: 8, color: '#fff', weight: 2, fillColor: '#1a73e8', fillOpacity: 1
+      }).addTo(leafletMap).bindTooltip('You are here').openTooltip();
+      leafletMap.setView([latitude, longitude], 18);
+    },
+    () => alert('Could not get your location. Check location permissions for this site.'),
+    { enableHighAccuracy: true }
+  );
+}
+
+function clear2DRoute() {
+  if (navRouteLine) { leafletMap.removeLayer(navRouteLine); navRouteLine = null; }
+  if (walkerMarker) { leafletMap.removeLayer(walkerMarker); walkerMarker = null; }
+  if (walkerAnim) { cancelAnimationFrame(walkerAnim); walkerAnim = null; }
+  document.getElementById('routeSummary').style.display = 'none';
+}
+
+// Chatbot functionality - UPDATED FOR NETLIFY
+const chatBtn = document.getElementById('chatBtn');
+const chatBox = document.getElementById('chatBox');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+// Netlify functions URL - this will work both locally and on Netlify
+const SERVER_URL = window.location.origin + '/.netlify/functions';
+
+chatBtn.onclick = () => {
+  chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+  if (chatBox.style.display === 'flex') {
+    chatInput.focus();
+  }
+};
+
+// Allow pressing Enter to send message
+chatInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+function addMessage(sender, text) {
+  const msg = document.createElement('div');
+  msg.classList.add('msg', sender);
+  msg.innerText = text;
+  chatBody.appendChild(msg);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addLoadingIndicator() {
+  const loading = document.createElement('div');
+  loading.id = 'loading';
+  loading.classList.add('msg', 'bot', 'loading');
+  loading.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+  chatBody.appendChild(loading);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return loading;
+}
+
+function removeLoadingIndicator() {
+  const loading = document.getElementById('loading');
+  if (loading) {
+    loading.remove();
+  }
+}
+
+// Send message to Netlify function
+async function sendMessage() {
+  const message = chatInput.value.trim();
+  if (!message) return;
+
+  // Add user message
+  addMessage('user', message);
+  chatInput.value = '';
+  
+  // Show loading indicator
+  const loading = addLoadingIndicator();
+
+  try {
+    const response = await fetch(`${SERVER_URL}/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: message })
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    
+    // Remove loading indicator
+    removeLoadingIndicator();
+    
+    // Add bot response
+    addMessage('bot', data.response);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    removeLoadingIndicator();
+    addMessage('bot', "Sorry, I'm having trouble connecting right now. Please try again later.");
+  }
+}
+
+// Load initial options from Netlify function
+async function loadInitialOptions() {
+  try {
+    const response = await fetch(`${SERVER_URL}/options`);
+    const data = await response.json();
+    
+    const optionsDiv = document.createElement('div');
+    optionsDiv.classList.add('options');
+    
+    data.categories.forEach(category => {
+      const categoryTitle = document.createElement('div');
+      categoryTitle.className = 'category-title';
+      categoryTitle.textContent = category.name;
+      optionsDiv.appendChild(categoryTitle);
+      
+      category.questions.forEach(question => {
+        const btn = document.createElement('button');
+        btn.innerText = question;
+        btn.onclick = () => {
+          chatInput.value = question;
+          sendMessage();
+        };
+        optionsDiv.appendChild(btn);
+      });
+    });
+    
+    chatBody.appendChild(optionsDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    
+  } catch (error) {
+    console.error('Error loading options:', error);
+    // Fallback to local options
+    showLocalOptions();
+  }
+}
+
+function showLocalOptions() {
+  const optionsDiv = document.createElement('div');
+  optionsDiv.classList.add('options');
+  
+  const categories = [
+    {
+      name: "Admission Information",
+      questions: [
+        "How do I apply?",
+        "What are the requirements?",
+        "When is the application deadline?"
+      ]
+    },
+    {
+      name: "Tuition Fees",
+      questions: [
+        "How much is tuition?",
+        "Do you offer scholarships?",
+        "What payment methods are accepted?"
+      ]
+    },
+    {
+      name: "Campus Life", 
+      questions: [
+        "Are there dormitories?",
+        "What clubs are available?",
+        "What are the library hours?"
+      ]
+    }
+  ];
+  
+  categories.forEach(category => {
+    const categoryTitle = document.createElement('div');
+    categoryTitle.className = 'category-title';
+    categoryTitle.textContent = category.name;
+    optionsDiv.appendChild(categoryTitle);
+    
+    category.questions.forEach(question => {
+      const btn = document.createElement('button');
+      btn.innerText = question;
+      btn.onclick = () => {
+        chatInput.value = question;
+        sendMessage();
+      };
+      optionsDiv.appendChild(btn);
+    });
+  });
+  
+  chatBody.appendChild(optionsDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Initialize chatbot when window loads
+window.addEventListener('load', () => {
+  addMessage('bot', "Hello! 👋 I'm the La Salle University AI Assistant. I can help you with:\n\n• Admission Information\n• Tuition Fees & Scholarships\n• Campus Life & Facilities\n• Application Process\n\nChoose a question below or type your own!");
+  loadInitialOptions();
+});
+</script>
+</body>
+</html>

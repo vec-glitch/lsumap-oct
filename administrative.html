@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Buildings - La Salle University</title>
+  <link rel="stylesheet" href="administrative.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Modern Header -->
+  <header class="modern-header">
+    <div class="header-container">
+      <div class="header-brand">
+        <img src="index1logo.png" alt="LSU Logo" class="header-logo">
+        <div class="header-text">
+          <h1>La Salle University</h1>
+          <p>Campus Buildings Directory</p>
+        </div>
+      </div>
+      <a href="Index1.html" class="back-home-btn">
+        <i class='bx bx-arrow-back'></i>
+        Back to Map
+      </a>
+    </div>
+  </header>
+
+<!-- Modern Filter Navigation -->
+<nav class="modern-filter">
+  <div class="filter-container">
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all" onclick="setActiveFilter(this, 'Allbuilding.html')">
+        <i class='bx bx-buildings'></i>
+        All Buildings
+      </button>
+      <button class="filter-btn" data-filter="administrative" onclick="setActiveFilter(this, 'Administrative.html')">
+        <i class='bx bx-briefcase'></i>
+        Administrative
+      </button>
+      <button class="filter-btn" data-filter="academic" onclick="setActiveFilter(this, 'Academic.html')">
+        <i class='bx bx-book'></i>
+        Academic
+      </button>
+      <button class="filter-btn" data-filter="laboratories" onclick="setActiveFilter(this, 'Laboratories.html')">
+        <i class='bx bx-test-tube'></i>
+        Laboratories
+      </button>
+      <button class="filter-btn" data-filter="sports" onclick="setActiveFilter(this, 'Sports.html')">
+        <i class='bx bx-trophy'></i>
+        Sports Facilities
+      </button>
+      <button class="filter-btn" data-filter="services" onclick="setActiveFilter(this, 'Services.html')">
+        <i class='bx bx-wrench'></i>
+        Services
+      </button>
+    </div>
+    
+    <div class="search-box">
+      <i class='bx bx-search'></i>
+      <input type="text" placeholder="Search buildings..." id="searchInput">
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <main class="modern-grid">
+    <!-- Building Card 1 -->
+    <div class="modern-card" 
+         data-title="Accounting Office" 
+         data-description="This is the office where students pay their school fees and manage their financial accounts with the university. It handles all monetary transactions, ensuring the financial operations of the institution run smoothly."
+         data-images="Buildings/SJ Building/sj-building-1.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/SJ Building/sj-building-1.jpg" alt="Accounting Office" onerror="this.src='School.jpg'">
+        <div class="card-badge administrative">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Accounting Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> 8AM-5PM</span>
+          <span class="feature"><i class='bx bx-wifi'></i> School Fees</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="VP Office" 
+         data-description="This is the workspace for a Vice President of the university, who oversees major administrative divisions. This office focuses on high-level planning and decision-making for university operations."
+         data-images="Buildings/IS Building/is-building-1.jpg,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/IS Building/is-building-1.jpg" alt="VP Office" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">VP Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> VP Office</span>
+          <span class="feature"><i class='bx bx-wifi'></i> High-Speed WiFi</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="Registrar" 
+         data-description="The Registrar's office is responsible for maintaining all student academic records, including course registrations, grades, and transcripts. It is the central hub for official enrollment status and academic history."
+         data-images="Photos/Screenshot 2025-11-24 163323.png,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/Screenshot 2025-11-24 163323.png" alt="Registrar" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Registrar</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> Academic History</span>
+          <span class="feature"><i class='bx bx-time'></i> 7AM-10PM</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="Admissions Office" 
+         data-description="This office manages the entire student enrollment process, from application to acceptance. It is where prospective students submit their materials and get information about becoming a student at the university."
+         data-images="Photos/20251106_152208.jpg,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/20251106_152208.jpg" alt="Admissions Office" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Admissions Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i> Enrollment Process</span>
+          <span class="feature"><i class='bx bx-dna'></i> Admission</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="USG Office" 
+         data-description="This office serves as the headquarters for the University Student Government (USG), providing a space for student leaders to organize events, address student concerns, and represent the student body."
+         data-images="Buildings/USG Office/Screenshot 2025-11-11 151843.png,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/USG Office/Screenshot 2025-11-11 151843.png" alt="USG Office" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">USG Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i>USG Office</span>
+          <span class="feature"><i class='bx bx-institution'></i>Student Gov</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+            <div class="modern-card" 
+         data-title="Mac Lab" 
+         data-description="A computer laboratory furnished with Apple iMac or MacBook computers, used for courses and projects related to graphic design, video editing, and iOS development."
+         data-images="Photos/csit_faculty office.png,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/csit_faculty office.png" alt="Mac Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">CS IT Faculty Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i>CSIT </span>
+          <span class="feature"><i class='bx bx-dna'></i> Faculty Office</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Add more building cards following the same structure -->
+  </main>
+
+  <!-- Modern Modal -->
+  <div class="modern-modal-overlay" id="modalOverlay"></div>
+  <div class="modern-modal" id="modal">
+    <button class="modal-close" id="closeModal">
+      <i class='bx bx-x'></i>
+    </button>
+
+    <div class="modal-gallery">
+      <div class="gallery-container">
+        <button class="gallery-nav prev" id="prevBtn">
+          <i class='bx bx-chevron-left'></i>
+        </button>
+        <div class="gallery-slide">
+          <img id="modalImage" src="" alt="Building Image">
+        </div>
+        <button class="gallery-nav next" id="nextBtn">
+          <i class='bx bx-chevron-right'></i>
+        </button>
+      </div>
+      <div class="gallery-indicator">
+        <span id="imageCounter">1 / 3</span>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+    </div>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Building Title</h2>
+        <div class="modal-badge" id="modalBadge">
+          <i class='bx bx-buildings'></i>
+          <span>Administrative</span>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <p id="modalDescription">Building description will appear here.</p>
+        
+        <div class="modal-features">
+          <h4>Facilities & Features</h4>
+          <div class="features-grid">
+            <div class="feature-item">
+              <i class='bx bx-time'></i>
+              <span>Operating Hours: 8:00 AM - 5:00 PM</span>
+            </div>
+            <div class="feature-item">
+              <i class='bx bx-wifi'></i>
+              <span>High-Speed WiFi Available</span>
+            </div>
+            <div class="feature-item">
+              <i class='bx bx-accessibility'></i>
+              <span>Accessibility Friendly</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer - MOVED HERE, OUTSIDE THE MODAL -->
+  <footer class="admission-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>La Salle University</h3>
+                <p>Providing quality Lasallian education since 1928. Committed to academic excellence and holistic development.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index1.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="announcement.html">Announcement</a></li>
+                    <li><a href="administrative.html">Admissions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="contact-info">
+                    <p><i class='bx bx-map'></i> La Salle University, Ozamiz City, Philippines</p>
+                    <p><i class='bx bx-phone'></i> (0953) 964 3792</p>
+                    <p><i class='bx bx-envelope'></i> admissions@lsu.edu.ph</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 La Salle University. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Site Map</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <script src="administrative.js"></script>
+</body>
+</html>

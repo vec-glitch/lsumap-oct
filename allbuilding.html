@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Buildings - La Salle University</title>
+  <link rel="stylesheet" href="allbuilding.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Modern Header -->
+  <header class="modern-header">
+    <div class="header-container">
+      <div class="header-brand">
+        <img src="index1logo.png" alt="LSU Logo" class="header-logo">
+        <div class="header-text">
+          <h1>La Salle University</h1>
+          <p>Campus Buildings Directory</p>
+        </div>
+      </div>
+      <a href="Index1.html" class="back-home-btn">
+        <i class='bx bx-arrow-back'></i>
+        Back to Map
+      </a>
+    </div>
+  </header>
+
+<!-- Modern Filter Navigation -->
+<nav class="modern-filter">
+  <div class="filter-container">
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all" onclick="setActiveFilter(this, 'Allbuilding.html')">
+        <i class='bx bx-buildings'></i>
+        All Buildings
+      </button>
+      <button class="filter-btn" data-filter="administrative" onclick="setActiveFilter(this, 'Administrative.html')">
+        <i class='bx bx-briefcase'></i>
+        Administrative
+      </button>
+      <button class="filter-btn" data-filter="academic" onclick="setActiveFilter(this, 'Academic.html')">
+        <i class='bx bx-book'></i>
+        Academic
+      </button>
+      <button class="filter-btn" data-filter="laboratories" onclick="setActiveFilter(this, 'Laboratories.html')">
+        <i class='bx bx-test-tube'></i>
+        Laboratories
+      </button>
+      <button class="filter-btn" data-filter="sports" onclick="setActiveFilter(this, 'Sports.html')">
+        <i class='bx bx-trophy'></i>
+        Sports Facilities
+      </button>
+      <button class="filter-btn" data-filter="services" onclick="setActiveFilter(this, 'Services.html')">
+        <i class='bx bx-wrench'></i>
+        Services
+      </button>
+    </div>
+    
+    <div class="search-box">
+      <i class='bx bx-search'></i>
+      <input type="text" placeholder="Search buildings..." id="searchInput">
+    </div>
+  </div>
+</nav>
+
+  <!-- Main Content -->
+  <main class="modern-grid">
+    <!-- Building Card 1 -->
+    <div class="modern-card" 
+         data-title="SJ Building" 
+         data-description="The SJ Building serves as the central administrative hub of La Salle University. It houses the President's office, administrative departments, and serves as the main point for official university transactions and operations."
+         data-images="Buildings/SJ Building/20251002_161219.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/SJ Building/20251002_161219.jpg" alt="SJ Building" onerror="this.src='School.jpg'">
+        <div class="card-badge administrative">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">SJ Building</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> 8AM-5PM</span>
+          <span class="feature"><i class='bx bx-wifi'></i> WiFi</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="IS Building" 
+         data-description="The BVM Building accommodates elementary and high school levels along with their administrative and academic offices. It serves multiple educational tiers within one facility, creating an integrated learning environment. This building supports the complete basic education program from elementary through high school."
+         data-images="Buildings/BVM/20251106_151243.jpg,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/BVM/20251106_151243.jpg" alt="IS Building" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">BVM Building</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> Computer Labs</span>
+          <span class="feature"><i class='bx bx-wifi'></i> High-Speed WiFi</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="University Library" 
+         data-description="A modern learning facility offering extensive digital resources, quiet reading zones, collaborative study rooms, and research assistance. The library provides access to thousands of books, journals, and online databases for academic excellence."
+         data-images="Photos/Screenshot 2025-11-13 152038.png,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/Screenshot 2025-11-13 152038.png" alt="Library" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">University Library</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> Study Rooms</span>
+          <span class="feature"><i class='bx bx-time'></i> 7AM-10PM</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="Science Laboratory" 
+         data-description="The Admissions Office serves as the primary point of contact for all prospective students interested in joining the university. This office manages the entire application process, from initial inquiry to final enrollment, providing guidance on requirements and deadlines."
+         data-images="Buildings/SJ Building/20251106_152215.jpg,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/SJ Building/20251106_152215.jpg" alt="Science Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge administrative">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Admissions Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i>  Enrollment Process</span>
+          <span class="feature"><i class='bx bx-dna'></i> Admission</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="Sports Complex" 
+         data-description=" The Deportivo sports facility features courts for basketball and volleyball activities. It serves as a venue for both competitive sports and recreational games. This facility supports physical education classes and athletic events for the university community."
+         data-images="Buildings/Deportivo/IMG_1453.jpg,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Deportivo/IMG_1453.jpg" alt="Sports Complex" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Deportivo</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i> Basketball</span>
+          <span class="feature"><i class='bx bx-swim'></i> Swimming Pool</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+
+       <div class="modern-card" 
+         data-title="Accounting Office" 
+         data-description="This is the office where students pay their school fees and manage their financial accounts with the university. It handles all monetary transactions, ensuring the financial operations of the institution run smoothly."
+         data-images="Buildings/SJ Building/sj-building-1.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/SJ Building/sj-building-1.jpg" alt="Accounting Office" onerror="this.src='School.jpg'">
+        <div class="card-badge administrative">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Accounting Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> 8AM-5PM</span>
+          <span class="feature"><i class='bx bx-wifi'></i> School Fees</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="VP Office" 
+         data-description="This is the workspace for a Vice President of the university, who oversees major administrative divisions. This office focuses on high-level planning and decision-making for university operations."
+         data-images="Buildings/IS Building/is-building-1.jpg,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/IS Building/is-building-1.jpg" alt="VP Office" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">VP Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> VP Office</span>
+          <span class="feature"><i class='bx bx-wifi'></i> High-Speed WiFi</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="Registrar" 
+         data-description="The Registrar's office is responsible for maintaining all student academic records, including course registrations, grades, and transcripts. It is the central hub for official enrollment status and academic history."
+         data-images="Photos/Screenshot 2025-11-24 163323.png,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/Screenshot 2025-11-24 163323.png" alt="Registrar" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Registrar</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> Academic History</span>
+          <span class="feature"><i class='bx bx-time'></i> 7AM-10PM</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="Admissions Office" 
+         data-description="This office manages the entire student enrollment process, from application to acceptance. It is where prospective students submit their materials and get information about becoming a student at the university."
+         data-images="Photos/20251106_152208.jpg,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/20251106_152208.jpg" alt="Admissions Office" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Admissions Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i> Enrollment Process</span>
+          <span class="feature"><i class='bx bx-dna'></i> Admission</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="USG Office" 
+         data-description="This office serves as the headquarters for the University Student Government (USG), providing a space for student leaders to organize events, address student concerns, and represent the student body."
+         data-images="Buildings/USG Office/Screenshot 2025-11-11 151843.png,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/USG Office/Screenshot 2025-11-11 151843.png" alt="USG Office" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">USG Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i>USG Office</span>
+          <span class="feature"><i class='bx bx-institution'></i>Student Gov</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+            <div class="modern-card" 
+         data-title="Mac Lab" 
+         data-description="A computer laboratory furnished with Apple iMac or MacBook computers, used for courses and projects related to graphic design, video editing, and iOS development."
+         data-images="Photos/csit_faculty office.png,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/csit_faculty office.png" alt="Mac Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">CS IT Faculty Office</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i>CSIT </span>
+          <span class="feature"><i class='bx bx-dna'></i> Faculty Office</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+
+
+<!-- ACADEMIC -->
+       <div class="modern-card" 
+         data-title="CCSEA Department" 
+         data-description="This college is the hub for technology, innovation, and design, offering programs in IT, engineering, and architecture. It equips students with the skills to build and design the future."
+         data-images="Photos/20251106_160216.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Photos/20251106_160216.jpg" alt="CBA Building" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Computer Studies, Engineering, and Architecture</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> CCSEA </span>
+          <span class="feature"><i class='bx bx-wifi'></i> Engineering </span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="CBA Department" 
+         data-description="This college focuses on business, finance, and management education, training future entrepreneurs and accountants. It is the academic home for students pursuing degrees that drive the corporate and economic world."
+         data-images="Buildings/IS Building/is-building-1.jpg,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/IS Building/is-building-1.jpg" alt="CBA Building" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Business and Accountancy</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> Business </span>
+          <span class="feature"><i class='bx bx-wifi'></i> Accountancy</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="College of Nursing" 
+         data-description="This college is dedicated to the healthcare sector, educating and training compassionate and skilled nursing professionals. It prepares students for critical roles in hospitals and community health."
+         data-images="Photos/20251106_160159.jpg,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/20251106_160159.jpg" alt="Library" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Nursing</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> CON</span>
+          <span class="feature"><i class='bx bx-time'></i> Nursing</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="College of Tourism and Hospitality Management" 
+         data-description="This college specializes in the dynamic travel and service industries, covering hotel management, tourism, and culinary arts. It prepares students for leadership roles in the global hospitality sector."
+         data-images="Photos/20251106_160119.jpg,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/20251106_160119.jpg" alt="CTHM Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Tourism and Hospitality Management</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i> Tourism</span>
+          <span class="feature"><i class='bx bx-dna'></i> Hospitality</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="College of Arts and Sciences" 
+         data-description="This college provides a broad foundation in the liberal arts, sciences, and humanities. It fosters critical thinking and diverse knowledge, serving as the core for many undergraduate programs."
+         data-images="Buildings/Sports Complex/sports-1.jpg,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Sports Complex/sports-1.jpg" alt="CAS Complex" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Arts and Sciences</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i>Arts </span>
+          <span class="feature"><i class='bx bx-swim'></i>Science</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+  
+        <div class="modern-card" 
+         data-title=" College of Criminal Justice Education" 
+         data-description="This college is dedicated to law enforcement, criminal justice, and public safety, preparing students for careers as police officers, criminologists, and forensic specialists. It provides a strong foundation in law, ethics, and crime prevention."
+         data-images="Buildings/Sports Complex/sports-1.jpg,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Sports Complex/sports-1.jpg" alt="CAS Complex" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-book'></i>
+          Academic
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Criminal Justice Education</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i>Law </span>
+          <span class="feature"><i class='bx bx-swim'></i>Criminology</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+        <div class="modern-card" 
+         data-title="USG Office" 
+         data-description="he College of Teacher Education (CTE) is dedicated to preparing future educators for elementary and secondary levels. It offers comprehensive programs that combine educational theory with practical teaching experience. The college develops skilled and compassionate teachers through modern teaching methodologies and field practice."
+         data-images="Buildings/USG Office/Screenshot 2025-11-11 151843.png,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/USG Office/Screenshot 2025-11-11 151843.png" alt="USG Office" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-briefcase'></i>
+          Administrative
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">College of Teacher Education</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i>CTE</span>
+          <span class="feature"><i class='bx bx-institution'></i>Education</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+
+    <!-- LABORATORIES -->
+    <div class="modern-card" 
+         data-title="Cisco Lab" 
+         data-description="This specialized lab is equipped with Cisco networking hardware, providing a hands-on environment for students to learn about routing, switching, and network configuration. It is essential for IT and networking courses."
+         data-images="Photos/ciscolab.png,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Photos/ciscolab.png" alt="Cisco Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-test-tube'></i>
+          Laboratory
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Cisco Lab</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> CiscoLab </span>
+          <span class="feature"><i class='bx bx-wifi'></i> Networking </span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="IT/CS Open Lab" 
+         data-description="A general-purpose computer lab open to all IT and Computer Science students for coursework, research, and projects. It provides essential software and hardware for a wide range of computing tasks."
+         data-images="Photos/openlab7.png,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Photos/openlab7.png" alt="IT/CS Open Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-test-tube'></i>
+          Laboratory
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">IT/CS Open Lab</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> ITLab</span>
+          <span class="feature"><i class='bx bx-wifi'></i> CSLab </span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="Programming Lab" 
+         data-description="This lab is specifically configured for software development, offering the tools and environments needed for coding, debugging, and testing various programming languages and applications."
+         data-images="Photos/programming laboratory.png,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/programming laboratory.png" alt="Programming Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-test-tube'></i>
+          Laboratory
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Programming Lab</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> Coding</span>
+          <span class="feature"><i class='bx bx-time'></i> SoftwareDevelopment</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="Mac Lab" 
+         data-description="A computer laboratory furnished with Apple iMac or MacBook computers, used for courses and projects related to graphic design, video editing, and iOS development."
+         data-images="Photos/maclab.png,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/maclab.png" alt="Mac Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-test-tube'></i>
+          Laboratory
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Mac Lab</h3>
+        <p class="card-description">More Information Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i> MacLab </span>
+          <span class="feature"><i class='bx bx-dna'></i> Apple</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!--SPORTS-->
+    <div class="modern-card" 
+         data-title="Deportivo Court" 
+         data-description="The SJ Building serves as the central administrative hub of La Salle University. It houses the President's office, administrative departments, and serves as the main point for official university transactions and operations."
+         data-images="Buildings/Deportivo/IMG_1453.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Deportivo/IMG_1453.jpg" alt="Deportivo Court" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Deportivo Court</h3>
+        <p class="card-description">More Info Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i> Basketball</span>
+          <span class="feature"><i class='bx bx-ball'></i> Volleyball</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="SC Grounds" 
+         data-description="The College of Information Technology features state-of-the-art computer labs, modern classrooms, and innovation centers. It's designed to foster creativity and real-world technology projects with high-speed internet and advanced computing resources."
+         data-images="Photos/sbground.png,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Photos/sbground.png" alt="SC Grounds" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">SC Grounds</h3>
+        <p class="card-description">More Info Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-music'></i> Dance Event</span>
+          <span class="feature"><i class='bx bx-car'></i>Parking Lot</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="SB Grounds" 
+         data-description="A modern learning facility offering extensive digital resources, quiet reading zones, collaborative study rooms, and research assistance. The library provides access to thousands of books, journals, and online databases for academic excellence."
+         data-images="Photos/scground.png,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Photos/scground.png" alt="SB Grounds" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">SB Grounds</h3>
+        <p class="card-description">More Info Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-ball'></i> Volleyball</span>
+          <span class="feature"><i class='bx bx-ball'></i> Sepak Takraw</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="BVM Covered Court" 
+         data-description="Advanced research facility equipped with modern laboratory equipment for chemistry, biology, and physics experiments. Features specialized labs, research areas, and dedicated spaces for scientific innovation and discovery."
+         data-images="Photos/bvmcoveredcourt.png,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Photos/bvmcoveredcourt.png" alt="BVM Covered Court" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">BVM Covered Court</h3>
+        <p class="card-description">More Info Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i> Basketball</span>
+          <span class="feature"><i class='bx bx-ball'></i> Volleyball</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="Sports Complex" 
+         data-description="he Oval features a track and field facility for athletic training and competitions. It provides a dedicated space for running events and field sports activities. This facility supports the university's physical education program and athletic team practices."
+         data-images="Buildings/Oval/20251106_155214.jpg,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Oval/20251106_155214.jpg" alt="Sports Complex" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-trophy'></i>
+          Sports
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Oval</h3>
+        <p class="card-description">More Info Goes here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i> Track & Field</span>
+          <span class="feature"><i class='bx bx-swim'></i> Football</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+
+    <!--SERVICES-->
+       <div class="modern-card" 
+         data-title=" University Clinic" 
+         data-description="The SJ Building serves as the central administrative hub of La Salle University. It houses the President's office, administrative departments, and serves as the main point for official university transactions and operations."
+         data-images="Buildings/SJ Building/sj-building-1.jpg,Buildings/SJ Building/sj-building-2.jpg,Buildings/SJ Building/sj-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/SJ Building/sj-building-1.jpg" alt="Clinic" onerror="this.src='School.jpg'">
+        <div class="card-badge administrative">
+          <i class='bx bx-user-check'></i>
+          Services
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title"> University Clinic</h3>
+        <p class="card-description">More Information Goes Here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-time'></i> 8AM-5PM</span>
+          <span class="feature"><i class='bx bx-wifi'></i> Clinic</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 2 -->
+    <div class="modern-card" 
+         data-title="LEARNING RESOURCES CENTER" 
+         data-description="The College of Information Technology features state-of-the-art computer labs, modern classrooms, and innovation centers. It's designed to foster creativity and real-world technology projects with high-speed internet and advanced computing resources."
+         data-images="Buildings/IS Building/is-building-1.jpg,Buildings/IS Building/is-building-2.jpg,Buildings/IS Building/is-building-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/IS Building/is-building-1.jpg" alt="LEARNING RESOURCES CENTER" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-user-check'></i>
+          Services
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">LEARNING RESOURCES CENTER</h3>
+        <p class="card-description">More Information Goes Here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-desktop'></i> Computer Labs</span>
+          <span class="feature"><i class='bx bx-wifi'></i> High-Speed WiFi</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 3 -->
+    <div class="modern-card" 
+         data-title="University Library" 
+         data-description="A modern learning facility offering extensive digital resources, quiet reading zones, collaborative study rooms, and research assistance. The library provides access to thousands of books, journals, and online databases for academic excellence."
+         data-images="Buildings/Library/library-1.jpg,Buildings/Library/library-2.jpg,Buildings/Library/library-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Library/library-1.jpg" alt="Library" onerror="this.src='School.jpg'">
+        <div class="card-badge academic">
+          <i class='bx bx-user-check'></i>
+          Services
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">University Library</h3>
+        <p class="card-description">More Information Goes Here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-book-open'></i> Study Rooms</span>
+          <span class="feature"><i class='bx bx-time'></i> 7AM-10PM</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 4 -->
+    <div class="modern-card" 
+         data-title="Lorem" 
+         data-description="Advanced research facility equipped with modern laboratory equipment for chemistry, biology, and physics experiments. Features specialized labs, research areas, and dedicated spaces for scientific innovation and discovery."
+         data-images="Buildings/Science Lab/lab-1.jpg,Buildings/Science Lab/lab-2.jpg,Buildings/Science Lab/lab-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Science Lab/lab-1.jpg" alt="Science Lab" onerror="this.src='School.jpg'">
+        <div class="card-badge laboratory">
+          <i class='bx bx-user-check'></i>
+          Services
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Lorem</h3>
+        <p class="card-description">More Information Goes Here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-flask'></i> Chemistry Lab</span>
+          <span class="feature"><i class='bx bx-dna'></i> Biology Lab</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Building Card 5 -->
+    <div class="modern-card" 
+         data-title="Lorem" 
+         data-description="State-of-the-art athletic facility featuring a gymnasium, basketball courts, swimming pool, and fitness center. Hosts university sports events, training sessions, and provides recreational activities for students and faculty."
+         data-images="Buildings/Sports Complex/sports-1.jpg,Buildings/Sports Complex/sports-2.jpg,Buildings/Sports Complex/sports-3.jpg">
+      <div class="card-image">
+        <img src="Buildings/Sports Complex/sports-1.jpg" alt="Sports Complex" onerror="this.src='School.jpg'">
+        <div class="card-badge sports">
+          <i class='bx bx-user-check'></i>
+          Services
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Lorem</h3>
+        <p class="card-description">More Information Goes Here!</p>
+        <div class="card-features">
+          <span class="feature"><i class='bx bx-basketball'></i> Basketball</span>
+          <span class="feature"><i class='bx bx-swim'></i> Swimming Pool</span>
+        </div>
+      </div>
+      <div class="card-hover">
+        <button class="view-btn">
+          <i class='bx bx-show'></i>
+          View Details
+        </button>
+      </div>
+    </div>
+    
+    <!-- Add more building cards following the same structure -->
+  </main>
+
+  <!-- Modern Modal -->
+  <div class="modern-modal-overlay" id="modalOverlay"></div>
+  <div class="modern-modal" id="modal">
+    <button class="modal-close" id="closeModal">
+      <i class='bx bx-x'></i>
+    </button>
+
+    <div class="modal-gallery">
+      <div class="gallery-container">
+        <button class="gallery-nav prev" id="prevBtn">
+          <i class='bx bx-chevron-left'></i>
+        </button>
+        <div class="gallery-slide">
+          <img id="modalImage" src="" alt="Building Image">
+        </div>
+        <button class="gallery-nav next" id="nextBtn">
+          <i class='bx bx-chevron-right'></i>
+        </button>
+      </div>
+      <div class="gallery-indicator">
+        <span id="imageCounter">1 / 3</span>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+    </div>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Building Title</h2>
+        <div class="modal-badge" id="modalBadge">
+          <i class='bx bx-buildings'></i>
+          <span>Administrative</span>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <p id="modalDescription">Building description will appear here.</p>
+        
+        <div class="modal-features">
+          <h4>Facilities & Features</h4>
+          <div class="features-grid">
+            <div class="feature-item">
+              <i class='bx bx-time'></i>
+              <span>Operating Hours: 8:00 AM - 5:00 PM</span>
+            </div>
+            <div class="feature-item">
+              <i class='bx bx-wifi'></i>
+              <span>High-Speed WiFi Available</span>
+            </div>
+            <div class="feature-item">
+              <i class='bx bx-accessibility'></i>
+              <span>Accessibility Friendly</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer - MOVED HERE, OUTSIDE THE MODAL -->
+  <footer class="admission-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>La Salle University</h3>
+                <p>Providing quality Lasallian education since 1928. Committed to academic excellence and holistic development.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index1.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="announcement.html">Announcement</a></li>
+                    <li><a href="administrative.html">Admissions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="contact-info">
+                    <p><i class='bx bx-map'></i> La Salle University, Ozamiz City, Philippines</p>
+                    <p><i class='bx bx-phone'></i> (0953) 964 3792</p>
+                    <p><i class='bx bx-envelope'></i> admissions@lsu.edu.ph</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 La Salle University. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Site Map</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+  
+  <script src="allbuilding.js"></script>
+</body>
+</html>

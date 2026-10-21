@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Information - La Salle University</title>
+    <link rel="stylesheet" href="admissioninformation.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Admin Access Key Styles */
+        .admin-access-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .admin-access-container h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .admin-access-container p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        
+        .access-key-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .access-key-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 86, 63, 0.1);
+        }
+        
+        .access-key-btn {
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .access-key-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .access-error {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admission-header">
+        <div class="header-container">
+            <div class="header-content">
+                <h1>Admission Process</h1>
+                <p>Begin your journey at La Salle University</p>
+            </div>
+            <a href="index1.html" class="back-btn">
+                <i class='bx bx-arrow-back'></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admission-container">
+        <!-- Toggle Switch -->
+        <div class="process-toggle">
+            <button class="toggle-btn active" data-process="new">
+                <i class='bx bx-user-plus'></i>
+                New Undergraduate
+            </button>
+            <button class="toggle-btn" data-process="continuing">
+                <i class='bx bx-refresh'></i>
+                Continuing Undergraduate
+            </button>
+        </div>
+
+        <!-- New Undergraduate Process -->
+        <section id="new-process" class="process-section active">
+            <div class="section-header">
+                <h2>New Undergraduate Admission Process</h2>
+                <p>Steps to begin your academic journey</p>
+            </div>
+
+            <div class="process-steps">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/Enrollment Steps (1).png" alt="Online Application" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Enrollment Steps for New, Transferee, and Shiftee Undergraduate Students</h3>
+                            <p>This overview page introduces the enrollment procedures for Academic Year 2025-2026, guiding different student categories through La Salle University's admission process.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> New undergraduate students</li>
+                                <li><i class='bx bx-check'></i> Transferee students</li>
+                                <li><i class='bx bx-check'></i> Shiftee students</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/Enrollment Steps (2).png" alt="Document Submission" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Assigned Rooms for Colleges and Offices</h3>
+                            <p>This chart provides the specific room locations for each college and office involved in the enrollment process to help students navigate campus efficiently.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> College of Business and Accountancy (CBA)</li>
+                                <li><i class='bx bx-check'></i> College of Computer Studies, Engineering, and Architecture (CCSEA)</li>
+                                <li><i class='bx bx-check'></i> College of Nursing (CON)</li>
+                                <li><i class='bx bx-check'></i> College of Tourism and Hospitality Management (CTHM)</li>
+                                <li><i class='bx bx-check'></i> Career and Counseling Center (CCC)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/Enrollment Steps (3).png" alt="Entrance Examination" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Enrollment Process for New Students</h3>
+                            <p>This outlines the complete enrollment procedure for incoming freshmen and early admission students at La Salle University.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Admissions - ASC Office</li>
+                                <li><i class='bx bx-check'></i> Admission Testing - CCC</li>
+                                <li><i class='bx bx-check'></i> Course Advising - Colleges</li>
+                                <li><i class='bx bx-check'></i> Payment - Accounting Office</li>
+                                <li><i class='bx bx-check'></i> Validation - Registrar's Office</li>
+                                <li><i class='bx bx-check'></i> Accounts Creation - Registrar's Office</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/Enrollment Steps (4).png" alt="Admission Interview" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Enrollment Process for Transferee Students</h3>
+                            <p>This details the specialized enrollment procedure for students transferring from other institutions, including credit evaluation steps.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Course Crediting - Registrar's Office</li>
+                                <li><i class='bx bx-check'></i> Course Crediting Validation - Colleges</li>
+                                <li><i class='bx bx-check'></i> Admission - Registrar's Office</li>
+                                <li><i class='bx bx-check'></i> Advising - Colleges</li>
+                                <li><i class='bx bx-check'></i> Payment - Accounting Office</li>
+                                <li><i class='bx bx-check'></i> Validation - Registrar's Office</li>
+                                <li><i class='bx bx-check'></i> Accounts Creation - Registrar's Office</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/Enrollment Steps (5).png" alt="Final Enrollment" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Enrollment Process for Shiftee Students</h3>
+                            <p>This outlines the enrollment pathway for current students who wish to shift to different academic programs within the university.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Interview - Career and Counseling Center</li>
+                                <li><i class='bx bx-check'></i> Approval - Receiving College</li>
+                                <li><i class='bx bx-check'></i> Admission - ASC</li>
+                                <li><i class='bx bx-check'></i> Advising - Colleges</li>
+                                <li><i class='bx bx-check'></i> Payment - Accounting Office</li>
+                                <li><i class='bx bx-check'></i> Validation - Registrar's Office</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Continuing Undergraduate Process -->
+        <section id="continuing-process" class="process-section">
+            <div class="section-header">
+                <h2>Continuing Undergraduate Process</h2>
+                <p>Renew your enrollment for the upcoming semester</p>
+            </div>
+
+            <div class="process-steps">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/CONTINUING 1.png" alt="Online Pre-registration" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Enrollment Steps for Continuing Undergraduate Students</h3>
+                            <p>Overview of enrollment procedures for current students continuing their studies</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Continuing students process</li>
+                                <li><i class='bx bx-check'></i> Academic Year 2025-2026</li>
+                                <li><i class='bx bx-check'></i> Step-by-step enrollment guide</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/CONTINUING 2.png" alt="Clearance and Requirements" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Clearance and Requirements</h3>
+                            <p>Complete all clearance requirements and submit necessary documents.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Approve course loads and schedules</li>
+                                <li><i class='bx bx-check'></i> Process applications and documents</li>
+                                <li><i class='bx bx-check'></i> Provide academic guidance and planning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <div class="step-number">!</div>
+                    <div class="step-content">
+                        <div class="step-image">
+                            <img src="admission information/CONTINUING 3.png" alt="Payment and Enrollment" onerror="this.src='placeholder.jpg'">
+                        </div>
+                        <div class="step-info">
+                            <h3>Payment and Final Enrollment</h3>
+                            <p>Proceed to payment and complete your enrollment for the semester.</p>
+                            <ul class="step-details">
+                                <li><i class='bx bx-check'></i> Process tuition payments and downpayments</li>
+                                <li><i class='bx bx-check'></i> Issue registration certificates and validate enrollment</li>
+                                <li><i class='bx bx-check'></i> Collect feedback and evaluate process</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="contact-section">
+            <div class="contact-container">
+                <h2>Need Assistance?</h2>
+                <p>Our admission team is here to help you through the process</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class='bx bx-phone'></i>
+                        <div>
+                            <h4>Admission Hotline</h4>
+                            <p>(0953) 964 3792</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class='bx bx-envelope'></i>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>scholarships@lsu.edu.ph</p>
+                            <p>admissions@lsu.edu.ph</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class='bx bx-time'></i>
+                        <div>
+                            <h4>Office Hours</h4>
+                            <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption"></div>
+    </div>
+
+    <script>
+        // Admin Access Key Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const accessKeyInput = document.getElementById('accessKey');
+            const accessKeyBtn = document.getElementById('accessKeyBtn');
+            const accessError = document.getElementById('accessError');
+            
+            // Define the valid access key (in a real application, this would be more secure)
+            const validAccessKey = "LSU2024Admin";
+            
+            accessKeyBtn.addEventListener('click', function() {
+                const enteredKey = accessKeyInput.value.trim();
+                
+                if (enteredKey === validAccessKey) {
+                    // Successful access - redirect to admin panel or show admin content
+                    alert("Access granted! Redirecting to admin panel...");
+                    // In a real application, you would redirect to the admin panel
+                    // window.location.href = "admin-panel.html";
+                } else {
+                    // Show error message
+                    accessError.style.display = 'block';
+                    accessKeyInput.style.borderColor = '#e74c3c';
+                    
+                    // Clear error after 3 seconds
+                    setTimeout(function() {
+                        accessError.style.display = 'none';
+                        accessKeyInput.style.borderColor = '';
+                    }, 3000);
+                }
+            });
+            
+            // Allow pressing Enter to submit
+            accessKeyInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    accessKeyBtn.click();
+                }
+            });
+            
+            // Clear error when user starts typing again
+            accessKeyInput.addEventListener('input', function() {
+                accessError.style.display = 'none';
+                accessKeyInput.style.borderColor = '';
+            });
+        });
+
+        // Toggle between new and continuing undergraduate processes
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const processSections = document.querySelectorAll('.process-section');
+            
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetProcess = this.getAttribute('data-process');
+                    
+                    // Update active button
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target section, hide others
+                    processSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.getElementById(`${targetProcess}-process`).classList.add('active');
+                });
+            });
+
+            // Image Modal Functionality
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const captionText = document.getElementById('modalCaption');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            // Get all step images
+            const stepImages = document.querySelectorAll('.step-image img');
+            
+            // Add click event to each image
+            stepImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    modalImg.src = this.src;
+                    captionText.innerHTML = this.alt;
+                });
+            });
+            
+            // Close modal when clicking X
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+<!-- Footer -->
+<footer class="admission-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>La Salle University</h3>
+                <p>Providing quality Lasallian education since 1928. Committed to academic excellence and holistic development.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index1.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="announcement.html">Announcement</a></li>
+                    <li><a href="administrative.html">Admissions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="contact-info">
+                    <p><i class='bx bx-map'></i> La Salle University, Ozamiz City, Philippines</p>
+                    <p><i class='bx bx-phone'></i> (0953) 964 3792</p>
+                    <p><i class='bx bx-envelope'></i> admissions@lsu.edu.ph</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 La Salle University. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Site Map</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

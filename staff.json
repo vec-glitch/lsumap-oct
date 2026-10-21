@@ -1,0 +1,18 @@
+{
+  "staff": [
+    {
+      "id": 1,
+      "name": "Joshua",
+      "position": "Project Manager",
+      "description": "Current description here",
+      "image": "images/staff1.jpg"
+    },
+    {
+      "id": 2, 
+      "name": "Dr. Jane Smith",
+      "position": "Professor",
+      "description": "Another description here",
+      "image": "images/staff2.jpg"
+    }
+  ]
+}

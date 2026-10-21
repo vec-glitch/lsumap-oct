@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .search {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        #search {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #search:focus {
+            outline: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            background-color: white;
+        }
+        
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-radius: 10px;
+            margin-top: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+        
+        .result-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .result-name {
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        .no-results {
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            #search {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Building Directory</h1>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search by Name, Keyword, etc." autocomplete="off">
+            <div id="search-results"></div>
+        </div>
+        
+        <div class="building-info">
+            <h2>Welcome to the Building Directory</h2>
+            <p>Use the search bar above to find buildings in our database. Type the name of a building to see matching results.</p>
+            <p>Try searching for: <span class="highlight">Empire State</span>, <span class="highlight">Eiffel Tower</span>, or <span class="highlight">Burj Khalifa</span></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Building Directory &copy; 2023</p>
+    </footer>
+
+    <script>
+        // Building data - in a real application, this would come from a database
+        const buildings = [
+            {
+                name: "Empire State Building",
+                keywords: ["skyscraper", "new york", "art deco", "landmark"],
+                page: "empire-state.html",
+                image: "ESB"
+            },
+            {
+                name: "Eiffel Tower",
+                keywords: ["paris", "france", "landmark", "iron"],
+                page: "eiffel-tower.html",
+                image: "Eiffel"
+            },
+            {
+                name: "Burj Khalifa",
+                keywords: ["dubai", "uae", "tallest", "skyscraper"],
+                page: "burj-khalifa.html",
+                image: "Burj"
+            },
+            {
+                name: "Taj Mahal",
+                keywords: ["india", "agra", "mausoleum", "marble"],
+                page: "taj-mahal.html",
+                image: "Taj"
+            },
+            {
+                name: "Sydney Opera House",
+                keywords: ["australia", "sydney", "performing arts", "architecture"],
+                page: "sydney-opera.html",
+                image: "Sydney"
+            },
+            {
+                name: "Colosseum",
+                keywords: ["rome", "italy", "amphitheatre", "ancient"],
+                page: "colosseum.html",
+                image: "Colosseum"
+            },
+            {
+                name: "Big Ben",
+                keywords: ["london", "uk", "clock tower", "landmark"],
+                page: "big-ben.html",
+                image: "Big Ben"
+            },
+            {
+                name: "Petronas Towers",
+                keywords: ["kuala lumpur", "malaysia", "twin towers", "skyscraper"],
+                page: "petronas-towers.html",
+                image: "Petronas"
+            },
+            {
+                name: "Statue of Liberty",
+                keywords: ["new york", "usa", "monument", "landmark"],
+                page: "statue-liberty.html",
+                image: "Liberty"
+            },
+            {
+                name: "Great Wall of China",
+                keywords: ["china", "wall", "historical", "landmark"],
+                page: "great-wall.html",
+                image: "Great Wall"
+            }
+        ];
+
+        const searchInput = document.getElementById('search');
+        const searchResults = document.getElementById('search-results');
+
+        // Function to filter buildings based on search query
+        function filterBuildings(query) {
+            if (!query) return [];
+            
+            const lowerCaseQuery = query.toLowerCase();
+            return buildings.filter(building => {
+                return building.name.toLowerCase().includes(lowerCaseQuery) ||
+                       building.keywords.some(keyword => keyword.toLowerCase().includes(lowerCaseQuery));
+            });
+        }
+
+        // Function to display search results
+        function displayResults(results) {
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0 && searchInput.value.trim() !== '') {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No buildings found';
+                searchResults.appendChild(noResults);
+                searchResults.style.display = 'block';
+                return;
+            }
+            
+            if (results.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            results.forEach(building => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                // Create image placeholder (in a real app, this would be an actual image)
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'result-image';
+                imageDiv.textContent = building.image;
+                
+                // Create building name
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'result-name';
+                nameDiv.textContent = building.name;
+                
+                resultItem.appendChild(imageDiv);
+                resultItem.appendChild(nameDiv);
+                
+                resultItem.addEventListener('click', () => {
+                    // Navigate to the building's page
+                    // For demo purposes, we'll just show an alert
+                    alert(`Navigating to: ${building.page}`);
+                    // Uncomment the line below for actual navigation:
+                    // window.location.href = building.page;
+                    
+                    // Clear search and hide results
+                    searchInput.value = '';
+                    searchResults.style.display = 'none';
+                });
+                
+                searchResults.appendChild(resultItem);
+            });
+            
+            searchResults.style.display = 'block';
+        }
+
+        // Event listener for search input
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            const results = filterBuildings(query);
+            displayResults(results);
+        });
+
+        // Hide results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Prevent hiding when clicking inside search container
+        const searchContainer = document.querySelector('.search');
+        searchContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>

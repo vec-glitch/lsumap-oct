@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Feedback Dashboard</title>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #f4f6f5;
+    color: #1b1b1b;
+  }
+
+  header {
+    background: #1b4332;
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 {
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #logoutBtn {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  #logoutBtn:hover { background: rgba(255,255,255,0.25); }
+
+  /* Login screen */
+  #loginScreen {
+    max-width: 360px;
+    margin: 90px auto;
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  #loginScreen h2 {
+    margin-top: 0;
+    color: #1b4332;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #loginScreen label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+    margin-top: 14px;
+  }
+  #loginScreen input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  #loginBtn {
+    width: 100%;
+    margin-top: 20px;
+    background: #1b4332;
+    color: white;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  #loginBtn:hover { background: #2d6a4f; }
+  #loginError {
+    color: #b3261e;
+    font-size: 13px;
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* Dashboard */
+  #dashboard { display: none; padding: 24px; }
+  .dash-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .dash-topbar h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #1b4332;
+  }
+  #refreshBtn {
+    background: #eef4f0;
+    color: #1b4332;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #refreshBtn:hover { background: #dcebe2; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  thead {
+    background: #1b4332;
+    color: white;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:hover { background: #f9fbfa; }
+  td.message-cell { max-width: 320px; white-space: pre-wrap; }
+  td.date-cell { white-space: nowrap; color: #666; }
+  .subject-badge {
+    display: inline-block;
+    background: #eef4f0;
+    color: #1b4332;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .delete-btn {
+    background: #b3261e;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .delete-btn:hover { background: #8f1e18; }
+
+  #emptyState, #loadingState {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    background: white;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class='bx bx-shield-alt-2'></i> Feedback Admin</h1>
+  <button id="logoutBtn" onclick="logout()"><i class='bx bx-log-out'></i> Log out</button>
+</header>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <h2><i class='bx bx-lock-alt'></i> Admin Login</h2>
+  <label for="loginEmail">Email</label>
+  <input type="email" id="loginEmail" placeholder="admin@example.com" />
+  <label for="loginPassword">Password</label>
+  <input type="password" id="loginPassword" placeholder="••••••••" />
+  <button id="loginBtn" onclick="login()">Log In</button>
+  <div id="loginError">Invalid email or password.</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-topbar">
+    <h2><i class='bx bx-message-detail'></i> Submitted Feedback (newest first)</h2>
+    <button id="refreshBtn" onclick="loadFeedback()"><i class='bx bx-refresh'></i> Refresh</button>
+  </div>
+
+  <div id="loadingState" style="display:none;">Loading feedback...</div>
+  <div id="emptyState" style="display:none;">No feedback submitted yet.</div>
+
+  <table id="feedbackTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="feedbackTableBody"></tbody>
+  </table>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import {
+    getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+  import {
+    getFirestore, collection, query, orderBy, getDocs, deleteDoc, doc
+  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyChcrh4HSqCLkzlLm0NKLA_HTidpztq2gU",
+    authDomain: "lsu-campus-feedback.firebaseapp.com",
+    projectId: "lsu-campus-feedback",
+    storageBucket: "lsu-campus-feedback.firebasestorage.app",
+    messagingSenderId: "353851943760",
+    appId: "1:353851943760:web:717c9ca714fadb04911a55"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const loginScreen = document.getElementById('loginScreen');
+  const dashboard = document.getElementById('dashboard');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const loginError = document.getElementById('loginError');
+
+  // ---- AUTH STATE ----
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginScreen.style.display = 'none';
+      dashboard.style.display = 'block';
+      logoutBtn.style.display = 'flex';
+      loadFeedback();
+    } else {
+      loginScreen.style.display = 'block';
+      dashboard.style.display = 'none';
+      logoutBtn.style.display = 'none';
+    }
+  });
+
+  window.login = async function () {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    loginError.style.display = 'none';
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+      loginError.style.display = 'block';
+    }
+  };
+
+  window.logout = function () {
+    signOut(auth);
+  };
+
+  // allow pressing Enter in the password field to log in
+  document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') window.login();
+  });
+
+  // ---- LOAD FEEDBACK ----
+  window.loadFeedback = async function () {
+    const tableEl = document.getElementById('feedbackTable');
+    const bodyEl = document.getElementById('feedbackTableBody');
+    const loadingEl = document.getElementById('loadingState');
+    const emptyEl = document.getElementById('emptyState');
+
+    tableEl.style.display = 'none';
+    emptyEl.style.display = 'none';
+    loadingEl.style.display = 'block';
+    bodyEl.innerHTML = '';
+
+    try {
+      const q = query(collection(db, 'feedback'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+
+      loadingEl.style.display = 'none';
+
+      if (snapshot.empty) {
+        emptyEl.style.display = 'block';
+        return;
+      }
+
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const row = document.createElement('tr');
+
+        const dateStr = data.createdAt?.toDate
+          ? data.createdAt.toDate().toLocaleString()
+          : (data.timestamp || '');
+
+        row.innerHTML = `
+          <td class="date-cell">${dateStr}</td>
+          <td>${escapeHtml(data.name || '')}</td>
+          <td>${escapeHtml(data.email || '')}</td>
+          <td><span class="subject-badge">${escapeHtml(data.subject || '')}</span></td>
+          <td class="message-cell">${escapeHtml(data.message || '')}</td>
+          <td><button class="delete-btn" data-id="${docSnap.id}"><i class='bx bx-trash'></i> Delete</button></td>
+        `;
+        bodyEl.appendChild(row);
+      });
+
+      tableEl.style.display = 'table';
+
+      bodyEl.querySelectorAll('.delete-btn').forEach((btn) => {
+        btn.addEventListener('click', () => deleteFeedback(btn.dataset.id));
+      });
+
+    } catch (err) {
+      console.error(err);
+      loadingEl.style.display = 'none';
+      emptyEl.textContent = 'Could not load feedback. Check the console for details.';
+      emptyEl.style.display = 'block';
+    }
+  };
+
+  async function deleteFeedback(id) {
+    if (!confirm('Delete this feedback entry? This cannot be undone.')) return;
+    try {
+      await deleteDoc(doc(db, 'feedback', id));
+      loadFeedback();
+    } catch (err) {
+      console.error(err);
+      alert('Could not delete this entry. Check the console for details.');
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>

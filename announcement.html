@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements - La Salle Portal</title>
+
+  <!-- Icons + CSS -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="announcement.css">
+
+  <!-- Swiper CSS + JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">La Salle University Interactive Campus</div>
+    <button class="mobile-menu-btn">
+      <i class='bx bx-menu'></i>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="announcement.html" class="active">Announcements</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="announcement-section">
+    <div class="section-header">
+      <h1><i class='bx bx-megaphone'></i> Announcements</h1>
+      <div class="filter-controls">
+      </div>
+    </div>
+
+    <!-- Swipe -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!-- Pictures sa mga announcement -->
+        <div class="swiper-slide">
+          <img src="announcement1.jpg" alt="Announcement1">
+        </div>
+        <div class="swiper-slide">
+          <img src="announcement2.jpg" alt="announcement">
+        </div>
+        <div class="swiper-slide">
+          <img src="announcement3.jpg" alt="announcement3">
+        </div>
+      </div>
+
+      <!-- Dots navigation -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Announcement Cards Grid -->
+    <div class="announcements-grid">
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-calendar-event card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: Registration</h2>
+            <p class="card-date">Posted: March X, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">Registration for the  2025 semester opens next Monday. All students are encouraged to meet with their academic advisors before selecting courses.</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-trophy card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: PANAGHUGPONG</h2>
+            <p class="card-date">Posted: March 12, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">Join us for our Annual Events on October. Various competitions and activities will be held across campus.</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-book card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: Library Announcement</h2>
+            <p class="card-date">Posted: March 10, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">During finals week, the main library will extend its hours until 8PM. Study rooms can be reserved online</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-group card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: NO CLASS</h2>
+            <p class="card-date">Posted: March 8, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">There will be no class this upcoming Monday, Tuesday and Wednesday due to the bad weather. Please always be careful</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+
+      <!--Sa -->
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-wifi card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: Website Maintenance</h2>
+            <p class="card-date">Posted: March 5, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">Scheduled maintenance for campus Wi-Fi will occur this Saturday from 2 AM to 6 AM. Service interruptions are expected during this time.</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+
+      <div class="announcement-card">
+        <div class="card-header">
+          <i class='bx bx-dollar-circle card-icon'></i>
+          <div>
+            <h2 class="card-title">EXAMPLE: Scholarship Applications</h2>
+            <p class="card-date">Posted: March 1, 2025</p>
+          </div>
+        </div>
+        <p class="card-content">Applications for the 2025-2026 academic year scholarships are now open. Deadline to apply is April 30th, 2025.</p>
+        <div class="card-footer">
+          <span class="status posted">Posted</span>
+          <a href="#" class="read-more"><i class='bx bx-chevron-right'></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="announcement.html">Announcements</a>
+        <a href="contact.html">Contact</a>
+        <a href="aboutus.html">About Us</a>
+      </div>
+      <p class="copyright">© All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ Swiper Script should be at the end -->
+  <script>
+    // Initialize Swiper
+    const swiper = new Swiper(".mySwiper", {
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 1.2,
+      spaceBetween: 30,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      effect: "coverflow",
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 200,
+        modifier: 1,
+        slideShadows: false,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 1.2,
+        },
+        576: {
+          slidesPerView: 1,
+        }
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('nav ul');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    // Filter buttons functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // In a real implementation, you would filter the announcements here
+        // For this example, we'll just log the filter
+        console.log(`Filtering by: ${button.textContent}`);
+      });
+    });
+  </script>
+
+</body>
+</html>

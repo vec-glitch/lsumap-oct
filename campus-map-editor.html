@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus map editor</title>
+<style>
+  :root{--ink:#1c2b26;--line:#b9c4bf;--accent:#1b4332;--bg:#f4f6f5}
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;display:flex;flex-direction:column;font:14px system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+  #bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#fff;border-bottom:1px solid var(--line);align-items:center}
+  button,.btn{padding:6px 11px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+  button:hover,.btn:hover{border-color:var(--accent)}
+  button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button:focus-visible,.btn:focus-within{outline:2px solid #0077cc;outline-offset:2px}
+  .sep{width:1px;height:24px;background:var(--line);margin:0 4px}
+  input[type=number]{width:72px;padding:5px;border:1px solid var(--line);border-radius:6px;font:inherit}
+  #help{padding:6px 10px;font-size:13px;color:#4a5a54;background:#fff;border-bottom:1px solid var(--line)}
+  #wrap{flex:1;overflow:auto;background:#cfd6d3}
+  svg{display:block;cursor:crosshair}
+  text{font:600 12px system-ui,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:3px;pointer-events:none}
+</style></head><body>
+<div id="bar">
+  <label class="btn">Load map image<input type="file" id="img" accept="image/*" hidden></label>
+  <span class="sep"></span>
+  <button data-m="wp" class="on">Waypoint</button>
+  <button data-m="bl">Building</button>
+  <button data-m="ln">Connect</button>
+  <button data-m="del">Delete</button>
+  <span class="sep"></span>
+  <button id="zo" aria-label="Zoom out">Zoom out</button>
+  <button id="zi" aria-label="Zoom in">Zoom in</button>
+  <label>Meters per pixel <input id="mpp" type="number" step="0.01" min="0.01" value="0.35"></label>
+  <span class="sep"></span>
+  <button id="exp">Export JSON</button>
+  <label class="btn">Import JSON<input type="file" id="imp" accept=".json" hidden></label>
+  <button id="clr">Clear all</button>
+</div>
+<div id="help"></div>
+<div id="wrap"><svg id="svg"><image id="bg" href="campus-map.webp"/><g id="edges"></g><g id="nodes"></g></svg></div>
+<script>
+const $ = id => document.getElementById(id), svg = $('svg'), NS = 'http://www.w3.org/2000/svg';
+const helps = {
+  wp: 'Click along a walkway to add waypoints. Each new one links to the last selected node, so one click per bend traces a path. Drag any node to adjust it.',
+  bl: 'Click next to a door to place a building. It links to the selected waypoint. Double-click a building to rename it.',
+  ln: 'Click two nodes to connect them. Click the same pair again to disconnect.',
+  del: 'Click a node to delete it and its links.'
+};
+let W = 1410, H = 840, imgName = 'campus-map.webp', zoom = 1, mode = 'wp';
+let sel = null, linkFrom = null, nodes = {}, seq = 1, drag = null, moved = false;
+
+function setSize() {
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.style.width = W * zoom + 'px'; svg.style.height = H * zoom + 'px';
+  $('bg').setAttribute('width', W); $('bg').setAttribute('height', H);
+}
+function fit() { zoom = Math.min(1, (innerWidth - 20) / W); setSize(); }
+function pt(e) {
+  const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+  const q = p.matrixTransform(svg.getScreenCTM().inverse());
+  return { x: Math.round(q.x), y: Math.round(q.y) };
+}
+function link(a, b) {
+  const A = nodes[a], B = nodes[b]; if (!A || !B || a === b) return;
+  if (A.connects_to.includes(b)) {
+    A.connects_to = A.connects_to.filter(i => i !== b);
+    B.connects_to = B.connects_to.filter(i => i !== a);
+  } else { A.connects_to.push(b); B.connects_to.push(a); }
+}
+function add(x, y, type) {
+  let id; const b = type === 'building';
+  do { id = (b ? 'b_' : 'wp_') + seq++; } while (nodes[id]);
+  nodes[id] = { x, y, type, name: b ? (prompt('Building name:', 'Building ' + (seq - 1)) || id) : null, connects_to: [] };
+  return id;
+}
+function draw() {
+  const E = $('edges'), N = $('nodes'); E.innerHTML = ''; N.innerHTML = '';
+  for (const [id, n] of Object.entries(nodes)) for (const o of n.connects_to) if (id < o) {
+    const m = nodes[o];
+    E.insertAdjacentHTML('beforeend', `<line x1="${n.x}" y1="${n.y}" x2="${m.x}" y2="${m.y}" stroke="#0077cc" stroke-width="3" opacity=".85"/>`);
+  }
+  for (const [id, n] of Object.entries(nodes)) {
+    const b = n.type === 'building', c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', b ? 9 : 5);
+    c.setAttribute('fill', id === sel ? '#ffcc00' : id === linkFrom ? '#ff8800' : b ? '#e85d5d' : '#5dcaa5');
+    c.setAttribute('stroke', b ? '#d62828' : '#1d9e75'); c.setAttribute('stroke-width', 2);
+    c.dataset.id = id; N.appendChild(c);
+    if (b) {
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', n.x + 12); t.setAttribute('y', n.y + 4); t.textContent = n.name; N.appendChild(t);
+    }
+  }
+}
+function persist() {
+  try { localStorage.setItem('campusEditor', JSON.stringify({ imgName, W, H, nodes, seq, mpp: $('mpp').value, data: $('bg').getAttribute('href') })); } catch (e) {}
+}
+function restore() {
+  try {
+    const s = JSON.parse(localStorage.getItem('campusEditor') || 'null'); if (!s) return;
+    ({ imgName, W, H, nodes, seq } = s); $('mpp').value = s.mpp; if (s.data) $('bg').setAttribute('href', s.data);
+  } catch (e) {}
+}
+const idOf = e => e.target.dataset && e.target.dataset.id;
+
+svg.addEventListener('mousedown', e => { const id = idOf(e); if (id) { drag = id; moved = false; e.preventDefault(); } });
+addEventListener('mousemove', e => {
+  if (!drag) return; const p = pt(e);
+  nodes[drag].x = p.x; nodes[drag].y = p.y; moved = true; draw();
+});
+addEventListener('mouseup', () => { if (drag) persist(); drag = null; });
+svg.addEventListener('click', e => {
+  if (moved) { moved = false; return; }
+  const id = idOf(e);
+  if (mode === 'del') {
+    if (id) { Object.values(nodes).forEach(n => n.connects_to = n.connects_to.filter(i => i !== id)); delete nodes[id]; if (sel === id) sel = null; }
+  } else if (mode === 'ln') {
+    if (id) { if (linkFrom && linkFrom !== id) { link(linkFrom, id); linkFrom = null; } else linkFrom = id; }
+  } else if (id) { sel = id; }
+  else {
+    const p = pt(e), nid = add(p.x, p.y, mode === 'bl' ? 'building' : 'waypoint');
+    if (sel) link(sel, nid);
+    if (mode === 'wp') sel = nid;
+  }
+  draw(); persist();
+});
+svg.addEventListener('dblclick', e => {
+  const id = idOf(e);
+  if (id && nodes[id].type === 'building') {
+    const v = prompt('Building name:', nodes[id].name);
+    if (v) { nodes[id].name = v; draw(); persist(); }
+  }
+});
+document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+  mode = b.dataset.m; linkFrom = null;
+  document.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b));
+  $('help').textContent = helps[mode]; draw();
+});
+$('zi').onclick = () => { zoom *= 1.25; setSize(); };
+$('zo').onclick = () => { zoom /= 1.25; setSize(); };
+$('mpp').onchange = persist;
+$('img').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    const im = new Image();
+    im.onload = () => { W = im.naturalWidth; H = im.naturalHeight; imgName = f.name; $('bg').setAttribute('href', r.result); fit(); persist(); };
+    im.src = r.result;
+  };
+  r.readAsDataURL(f);
+};
+$('exp').onclick = () => {
+  const out = { image: imgName, width: W, height: H, metersPerPixel: parseFloat($('mpp').value) || 0.35, nodes };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' }));
+  a.download = 'campus-graph.json'; a.click();
+};
+$('imp').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  f.text().then(t => {
+    const g = JSON.parse(t);
+    nodes = g.nodes; W = g.width; H = g.height; imgName = g.image; $('mpp').value = g.metersPerPixel;
+    seq = Object.keys(nodes).length + 1; sel = null; fit(); draw(); persist();
+  });
+};
+$('clr').onclick = () => { if (confirm('Delete every node?')) { nodes = {}; sel = null; seq = 1; draw(); persist(); } };
+
+restore(); fit(); draw(); $('help').textContent = helps.wp;
+</script></body></html>

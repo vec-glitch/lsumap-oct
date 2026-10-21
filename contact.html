@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - La Salle Portal</title>
+
+  <!-- Icons + CSS -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="contact.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Custom Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .popup-content {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: popupSlide 0.3s ease-out;
+    }
+
+    @keyframes popupSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .popup-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .popup-success .popup-icon {
+      color: #0b6f4e;
+    }
+
+    .popup-error .popup-icon {
+      color: #dc3545;
+    }
+
+    .popup-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .popup-message {
+      color: var(--text-light);
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .popup-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* Loading state for submit button */
+    .submit-btn.loading {
+      background: var(--text-light);
+      cursor: not-allowed;
+    }
+
+    .submit-btn.loading span {
+      display: none;
+    }
+
+    .submit-btn.loading::after {
+      content: 'Sending...';
+    }
+
+    /* Status message styles */
+    .form-status {
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+      text-align: center;
+      display: none;
+    }
+
+    .form-status.success {
+      background: #e8f5e8;
+      color: #1a531b;
+      border: 1px solid #d0e6d0;
+      display: block;
+    }
+
+    .form-status.error {
+      background: #ffe8e8;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">La Salle University Interactive Campus</div>
+    <button class="mobile-menu-btn">
+      <i class='bx bx-menu'></i>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="announcement.html">Announcements</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="contact-section">
+    <div class="section-header">
+      <h1><i class='bx bx-envelope'></i> Contact Us</h1>
+      <p class="section-subtitle">Get in touch with our team for any inquiries or support</p>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="info-card">
+          <div class="info-icon">
+            <i class='bx bx-map'></i>
+          </div>
+          <div class="info-content">
+            <h3>Visit Our Campus</h3>
+            <p>La Salle St. Barangay Aguada,<br>Ozamiz City, Misamis Occidental, Philippines</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class='bx bx-phone'></i>
+          </div>
+          <div class="info-content">
+            <h3>Call Us</h3>
+            <p>Admissions: (0953) 964 3792</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class='bx bx-envelope'></i>
+          </div>
+          <div class="info-content">
+            <h3>Email Us</h3>
+            <p>admissions@lsu.edu.ph</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class='bx bx-time'></i>
+          </div>
+          <div class="info-content">
+            <h3>Office Hours</h3>
+            <p>Monday - Friday: 8:00 AM - 5:00 PM<br>Saturday: 8:00 AM - 12:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <h2>Send us a Message</h2>
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            <i class='bx bx-user input-icon'></i>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            <i class='bx bx-envelope input-icon'></i>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="" disabled selected>Select inquiry type</option>
+              <option value="admissions">Admissions Inquiry</option>
+              <option value="academic">Academic Matters</option>
+              <option value="financial">Registrar Inquiry</option>
+              <option value="technical">Technical Support</option>
+              <option value="general">General Inquiry</option>
+            </select>
+            <i class='bx bx-chevron-down input-icon'></i>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+            <i class='bx bx-edit-alt input-icon textarea-icon'></i>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Send Message</span>
+            <i class='bx bx-send'></i>
+          </button>
+          
+          <div id="formStatus" class="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beautiful Popup -->
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup-content" id="popupContent">
+      <!-- Content will be filled by JavaScript -->
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="announcement.html">Announcements</a>
+        <a href="contact.html">Contact</a>
+        <a href="aboutus.html">About Us</a>
+      </div>
+      <p class="copyright">©All rights reserved.</p>
+    </div>
+  </footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyChcrh4HSqCLkzlLm0NKLA_HTidpztq2gU",
+    authDomain: "lsu-campus-feedback.firebaseapp.com",
+    projectId: "lsu-campus-feedback",
+    storageBucket: "lsu-campus-feedback.firebasestorage.app",
+    messagingSenderId: "353851943760",
+    appId: "1:353851943760:web:717c9ca714fadb04911a55"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Exposed globally so the classic <script> below (which handles the
+  // form UI/popup) can call this without needing to be a module itself.
+  window.submitFeedbackToFirestore = async function (data) {
+    await addDoc(collection(db, "feedback"), {
+      ...data,
+      createdAt: serverTimestamp()
+    });
+  };
+</script>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+  const navMenu = document.querySelector('nav ul');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+  });
+
+  // Form submission with Google Sheets integration
+  const contactForm = document.getElementById('contact-form');
+  const submitBtn = contactForm.querySelector('.submit-btn');
+  const formStatus = document.getElementById('formStatus');
+  const popupOverlay = document.getElementById('popupOverlay');
+  const popupContent = document.getElementById('popupContent');
+
+  // Function to show beautiful popup
+  function showPopup(type, title, message) {
+    const icon = type === 'success' ? '✅' : '❌';
+    const popupClass = type === 'success' ? 'popup-success' : 'popup-error';
+    
+    popupContent.innerHTML = `
+      <div class="${popupClass}">
+        <div class="popup-icon">${icon}</div>
+        <h3 class="popup-title">${title}</h3>
+        <p class="popup-message">${message}</p>
+        <button class="popup-btn" onclick="hidePopup()">Continue</button>
+      </div>
+    `;
+    popupOverlay.style.display = 'flex';
+  }
+
+  // Function to hide popup
+  function hidePopup() {
+    popupOverlay.style.display = 'none';
+  }
+
+  // Close popup when clicking outside
+  popupOverlay.addEventListener('click', (e) => {
+    if (e.target === popupOverlay) {
+      hidePopup();
+    }
+  });
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  // Get form data
+  const formData = new FormData(contactForm);
+  const data = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    subject: formData.get('subject'),
+    message: formData.get('message'),
+    timestamp: new Date().toISOString()
+  };
+
+  // Show loading state
+  submitBtn.classList.add('loading');
+  formStatus.style.display = 'none';
+
+  try {
+    await window.submitFeedbackToFirestore(data);
+
+    showPopup('success', 'Message Sent!', 'Thank you for your message! We will get back to you soon.');
+    contactForm.reset();
+    submitBtn.classList.remove('loading');
+
+  } catch (error) {
+    console.error('Error:', error);
+    showPopup('error', 'Sending Failed', 'Sorry, there was an error sending your message. Please try again or contact us directly.');
+    submitBtn.classList.remove('loading');
+  }
+});
+</script>
+
+</body>
+</html>

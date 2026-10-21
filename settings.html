@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Settings - La Salle University</title>
+    <link rel="stylesheet" href="settings.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="settings-header">
+        <div class="header-container">
+            <div class="header-content">
+                <h1>Website Settings</h1>
+                <p>Customize your browsing experience</p>
+            </div>
+            <a href="index.html" class="back-btn">
+                <i class='bx bx-arrow-back'></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="settings-container">
+        <!-- Appearance Settings -->
+        <section class="settings-section">
+            <div class="section-header">
+                <i class='bx bx-palette'></i>
+                <h2>Appearance</h2>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Theme Mode</h3>
+                        <p>Choose between light and dark theme</p>
+                    </div>
+                    <div class="setting-control">
+                        <div class="theme-toggle">
+                            <button class="theme-btn active" data-theme="light">
+                                <i class='bx bx-sun'></i>
+                                Light
+                            </button>
+                            <button class="theme-btn" data-theme="dark">
+                                <i class='bx bx-moon'></i>
+                                Dark
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Font Size</h3>
+                        <p>Adjust the text size for better readability</p>
+                    </div>
+                    <div class="setting-control">
+                        <div class="font-size-control">
+                            <button class="size-btn" data-size="small">A</button>
+                            <button class="size-btn active" data-size="medium">A</button>
+                            <button class="size-btn" data-size="large">A</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Settings -->
+        <section class="settings-section">
+            <div class="section-header">
+                <i class='bx bx-slideshow'></i>
+                <h2>Content & Display</h2>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Image Display</h3>
+                        <p>Control how images are loaded and displayed</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Animations</h3>
+                        <p>Enable or disable page transitions and animations</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Content Density</h3>
+                        <p>Choose between compact and comfortable spacing</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select">
+                            <option value="comfortable">Comfortable</option>
+                            <option value="compact">Compact</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accessibility Settings -->
+        <section class="settings-section">
+            <div class="section-header">
+                <i class='bx bx-accessibility'></i>
+                <h2>Accessibility</h2>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>High Contrast Mode</h3>
+                        <p>Increase contrast for better visibility</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Reduced Motion</h3>
+                        <p>Minimize animations and transitions</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Screen Reader Support</h3>
+                        <p>Optimize for screen reader compatibility</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Settings -->
+        <section class="settings-section">
+            <div class="section-header">
+                <i class='bx bx-shield'></i>
+                <h2>Privacy & Data</h2>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Cookies</h3>
+                        <p>Manage cookie preferences and tracking</p>
+                    </div>
+                    <div class="setting-control">
+                        <select class="setting-select">
+                            <option value="essential">Essential Only</option>
+                            <option value="all" selected>All Cookies</option>
+                            <option value="none">No Cookies</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Data Saving</h3>
+                        <p>Reduce data usage when browsing</p>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Clear Site Data</h3>
+                        <p>Remove all stored preferences and cache</p>
+                    </div>
+                    <div class="setting-control">
+                        <button class="danger-btn">
+                            <i class='bx bx-trash'></i>
+                            Clear Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="settings-actions">
+            <button class="btn-secondary">
+                <i class='bx bx-reset'></i>
+                Reset to Default
+            </button>
+            <button class="btn-primary">
+                <i class='bx bx-save'></i>
+                Save Changes
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+  <footer class="admission-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>La Salle University</h3>
+                <p>Providing quality Lasallian education since 1928. Committed to academic excellence and holistic development.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index1.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="announcement.html">Announcement</a></li>
+                    <li><a href="administrative.html">Admissions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <div class="contact-info">
+                    <p><i class='bx bx-map'></i> La Salle University, Ozamiz City, Philippines</p>
+                    <p><i class='bx bx-phone'></i> (0953) 964 3792</p>
+                    <p><i class='bx bx-envelope'></i> admissions@lsu.edu.ph</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 La Salle University. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Site Map</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+    <script src="settings.js"></script>
+</body>
+</html>
